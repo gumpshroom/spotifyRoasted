@@ -1,4 +1,5 @@
 *.pyc
 .venv
 auth.json
+run.sh
 *.sqlite3
