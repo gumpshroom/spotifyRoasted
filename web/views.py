@@ -100,7 +100,7 @@ def generateWrap(request):
                 messages=[
                     {
                         "role": "user",
-                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about liking the song " + topSong + ", a " +
+                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about me liking the song " + topSong + ", a " +
                                    topGenre + " track. Use subtle, dry, sarcastic humor, humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response."
                     }
                 ],
@@ -111,7 +111,7 @@ def generateWrap(request):
                 messages=[
                     {
                         "role": "user",
-                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about liking the artist " + topArtist + ", a " +
+                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about me liking the artist " + topArtist + ", a " +
                                    topGenre + " music artist. Use subtle, dry, sarcastic humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics."
                     }
                 ],
@@ -122,7 +122,7 @@ def generateWrap(request):
                 messages=[
                     {
                         "role": "user",
-                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about liking " + topGenre + " music. Use subtle, dry, sarcastic, humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics."
+                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about me liking " + topGenre + " music. Use subtle, dry, sarcastic, humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics."
                     }
                 ],
                 model="llama3-8b-8192",
