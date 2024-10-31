@@ -112,7 +112,7 @@ def generateWrap(request):
                     {
                         "role": "user",
                         "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about me liking the artist " + topArtist + ", a " +
-                                   topGenre + " music artist. Use subtle, dry, sarcastic humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use quotes. Do not use statistics."
+                                   topGenre + " music artist. Use subtle, dry, sarcastic humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics."
                     }
                 ],
                 model="llama3-8b-8192",
