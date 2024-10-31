@@ -4,14 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Spotify Roasted</title>
-    <script src="{% static 'js/wrap.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.10/dist/cdn/beer.min.css" rel="stylesheet"/>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.10/dist/cdn/beer.min.js"></script>
+    <script type="module"
+            src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"
+            integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="{% static 'dist/reset.css' %}">
+		<link rel="stylesheet" href="{% static 'dist/reveal.css' %}">
+		<link rel="stylesheet" href="{% static 'dist/theme/black.css' %}">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="{% static 'plugin/highlight/monokai.css' %}">
 </head>
 <body>
+<div class="reveal">
+			<div class="slides">
+				<section>{{ wrap.topSongRoast }}</section>
+				<section>{{ wrap.topGenreRoast }}</section>
+                <section>{{ wrap.topArtistRoast }}</section>
+                <section>{{ wrap.summaryRoast }}</section>
+			</div>
+		</div>
+<script src="{% static '/dist/reveal.js' %}"></script>
 
-{{ wrap.topSongRoast }}
-{{ wrap.topGenreRoast }}
-{{ wrap.topArtistRoast }}
-{{ wrap.summaryRoast }}
+<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: []
+			});
+		</script>
 
+
+
+<script src="{% static 'js/wrap.js' %}"></script>
 </body>
 </html>
