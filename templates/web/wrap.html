@@ -1,0 +1,17 @@
+{% load static %}
+<html>
+<!-- wrap "player" -->
+<head>
+    <meta charset="UTF-8">
+    <title>Spotify Roasted</title>
+    <script src="{% static 'js/wrap.js' %}"></script>
+</head>
+<body>
+
+{{ wrap.topSongRoast }}
+{{ wrap.topGenreRoast }}
+{{ wrap.topArtistRoast }}
+{{ wrap.summaryRoast }}
+
+</body>
+</html>
