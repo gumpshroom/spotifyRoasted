@@ -100,8 +100,8 @@ def generateWrap(request):
                 messages=[
                     {
                         "role": "user",
-                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about me liking the song " + topSong + ", a " +
-                                   topGenre + " track. Use subtle, dry, sarcastic humor, humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response."
+                        "content": "Make a creative 2-3 sentence roast parody of a Spotify Wrapped about the user liking the song " + topSong + ", a " +
+                                   topGenre + " track. Use dry humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Don't start with 'here's a parody...'. Roast me, the user."
                     }
                 ],
                 model="llama3-8b-8192",
@@ -112,7 +112,7 @@ def generateWrap(request):
                     {
                         "role": "user",
                         "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about me liking the artist " + topArtist + ", a " +
-                                   topGenre + " music artist. Use subtle, dry, sarcastic humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics."
+                                   topGenre + " music artist. Use creative, witty humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
                     }
                 ],
                 model="llama3-8b-8192",
@@ -122,7 +122,7 @@ def generateWrap(request):
                 messages=[
                     {
                         "role": "user",
-                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about me liking " + topGenre + " music. Use subtle, dry, sarcastic, humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics."
+                        "content": "Make a witty 2-3 sentence roast parody of a Spotify Wrapped about me liking " + topGenre + " music. Use dry, creative but not overly sarcastic humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
                     }
                 ],
                 model="llama3-8b-8192",
@@ -132,7 +132,7 @@ def generateWrap(request):
                 messages=[
                     {
                         "role": "user",
-                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about my music taste summarizing the Wrapped. I like " + topArtist + " and other " + topGenre + " music. Use subtle, dry, sarcastic, humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics."
+                        "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped summary slide. I like " + topArtist + " and other " + topGenre + " music. Use subtle, dry, sarcastic, humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
                     }
                 ],
                 model="llama3-8b-8192",
