@@ -1,0 +1,54 @@
+body {
+    background-image: url('static/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 100vh;
+    margin: 0;
+}
+.container {
+    text-align: center;
+    display:flex;
+}
+.title {
+    position: absolute;
+    text-align:center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 5rem;
+    color: green;
+    font-family: "Circular Spotify Text Medium";
+}
+.roasted {
+    color: orangered;
+    font-family: "Johnny Torch"
+}
+.login-button{
+    font-family: "Circular Spotify Text Black";
+    font-size: 40px;
+    color: darkgreen;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    padding: 20px 40px;
+    border-radius: 30px;
+    background-color: black;
+    box-shadow: 5px 10px 15px darkolivegreen;
+    text-align: center;
+    cursor: pointer;
+}
+footer {
+    display: flex;
+    justify-content: space-between;
+    color:white;
+    margin-top: 40px;
+}
+.footer-text {
+    margin: 0 100px;
+}
