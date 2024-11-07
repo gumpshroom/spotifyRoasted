@@ -190,3 +190,7 @@ def getWrap(request):
             return HttpResponse("user not found")
     else:
         return redirect('/')
+
+
+def contact(request):
+    return render(request, "web/contact.html")
