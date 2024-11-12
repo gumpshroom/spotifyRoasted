@@ -1,10 +1,48 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.8/dist/cdn/beer.min.css" rel="stylesheet"/>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.8/dist/cdn/beer.min.js"></script>
+    <script type="module"
+            src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
     <title>Spotify Roasted</title>
+    <style>
+
+        .top-right {
+            display: flex;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .searchbar {
+            display: block;
+            width: 40%;
+        }
+
+        body {
+            {#background-image: url("{% static 'images/background.png' %}");#}
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+    </style>
+
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 </head>
-<body>
-<a href="/oauth">log in with spotify</a>
+
+<body class="light">
+
+<main>
+    <h1 class="max center-align">Spotify Roasted</h1>
+    <button class="max center-align" onclick="window.location.href='/oauth'">log in with spotify</button>
+</main>
+
 </body>
 </html>
