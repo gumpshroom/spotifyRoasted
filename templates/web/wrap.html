@@ -13,28 +13,118 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="{% static 'dist/reset.css' %}">
 		<link rel="stylesheet" href="{% static 'dist/reveal.css' %}">
-		<link rel="stylesheet" href="{% static 'dist/theme/black.css' %}">
-
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="{% static 'plugin/highlight/monokai.css' %}">
+		<link rel="stylesheet" href="{% static 'dist/theme/dracula.css' %}">
+    <style>
+  .left {
+    text-align: left;
+  }
+  .small {
+      font-size: 1.2rem;
+  }
+</style>
 </head>
 <body>
 <div class="reveal">
-			<div class="slides">
-				<section>{{ wrap.topSongRoast }}</section>
-				<section>{{ wrap.topGenreRoast }}</section>
-                <section>{{ wrap.topArtistRoast }}</section>
-                <section>{{ wrap.summaryRoast }}</section>
+			<div class="slides" id="slidesContainer">
+
 			</div>
 		</div>
 <script src="{% static '/dist/reveal.js' %}"></script>
 
 <script>
+    function splitToSentences(string) {
+        var sentences = [];
+        //respect brackets
+        var inBracket = false;
+        var inQuote = false;
+        var lastIndex = 0;
+        for (var i = 0; i < string.length; i++) {
+            if (string[i] === "(") {
+                inBracket = true;
+            } else if (string[i] === ")") {
+                inBracket = false;
+            }
+            if (string[i] === "\"") {
+                inQuote = !inQuote;
+            }
+            if ((string[i] === "." || string[i] === "?" || string[i] === "!") && !inBracket && !inQuote && (i === string.length - 1 || string[i + 2].match(/[A-Z]/))) {
+                sentences.push(string.substring(lastIndex, i + 1));
+                lastIndex = i + 2;
+            }
+        }
+        return sentences
+    }
+
+    function randomColor() {
+        var letters = '456789A';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 7)];
+        }
+        return color;
+    }
+
+    var topSongRoast = "{{ wrap.topSongRoast }}";
+    var topGenreRoast = "{{ wrap.topGenreRoast }}";
+    var topArtistRoast = "{{ wrap.topArtistRoast }}";
+    var summaryRoast = "{{ wrap.summaryRoast }}";
+
+    //split to sentences
+    var topSongRoastSentences = splitToSentences(topSongRoast);
+    var topGenreRoastSentences = splitToSentences(topGenreRoast);
+    var topArtistRoastSentences = splitToSentences(topArtistRoast);
+    var summaryRoastSentences = splitToSentences(summaryRoast);
+    console.log(topSongRoast)
+    console.log(topSongRoastSentences)
+    //generate slides
+    var container = document.getElementById("slidesContainer");
+
+    var topSongRoastSection = document.createElement("section");
+    topSongRoastSection.setAttribute('data-background-color', randomColor())
+    topSongRoastSection.setAttribute('data-transition', 'convex')
+    topSongRoastSection.innerHTML = "<div class='left'>" + topSongRoastSentences[0] + "</div>";
+    for (var i = 1; i < topSongRoastSentences.length; i++) {
+        topSongRoastSection.innerHTML += "<p class='fragment left small fade-up'>" + topSongRoastSentences[i] + "</p>";
+        container.appendChild(topSongRoastSection);
+    }
+
+    var topGenreRoastSection = document.createElement("section");
+    topGenreRoastSection.setAttribute('data-background-color', randomColor())
+    topGenreRoastSection.setAttribute('data-transition', 'convex')
+    topGenreRoastSection.innerHTML = "<div class='fade-in left'>" + topGenreRoastSentences[0] + "</div>";
+    for (var i = 1; i < topGenreRoastSentences.length; i++) {
+        topGenreRoastSection.innerHTML += "<p class='fragment left small fade-up'>" + topGenreRoastSentences[i] + "</p>";
+        container.appendChild(topGenreRoastSection);
+    }
+
+    var topArtistRoastSection = document.createElement("section");
+    topArtistRoastSection.setAttribute('data-background-color', randomColor())
+    topArtistRoastSection.setAttribute('data-transition', 'convex')
+    topArtistRoastSection.innerHTML = "<div class='fade-in left'>" + topArtistRoastSentences[0] + "</div>";
+    for (var i = 1; i < topArtistRoastSentences.length; i++) {
+        topArtistRoastSection.innerHTML += "<p class='fragment left small fade-up'>" + topArtistRoastSentences[i] + "</p>";
+        container.appendChild(topArtistRoastSection);
+    }
+
+    var summaryRoastSection = document.createElement("section");
+    summaryRoastSection.setAttribute('data-background-color', randomColor())
+    summaryRoastSection.setAttribute('data-transition', 'convex')
+    summaryRoastSection.innerHTML = "<div class='fade-in left'>" + summaryRoastSentences[0] + "</div>";
+    for (var i = 1; i < summaryRoastSentences.length; i++) {
+        summaryRoastSection.innerHTML += "<p class='fragment left small fade-up'>" + summaryRoastSentences[i] + "</p>";
+        container.appendChild(summaryRoastSection);
+    }
+
+</script>
+
+<script>
 			Reveal.initialize({
 				hash: true,
+                view: 'scroll',
+                scrollProgress: true,
 				plugins: []
 			});
-		</script>
+</script>
 
 
 

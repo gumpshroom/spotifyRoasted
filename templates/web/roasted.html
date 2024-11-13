@@ -11,8 +11,9 @@
             alert("welcome! create a wrap to get started")
         }
         //store token for login session
-        sessionStorage.spotifyAccessToken = "{{ accessToken|default:"" }}";
-        fetch("/getWraps?accessToken={{ accessToken|default:"" }}").then(data => data.json()).then(data => {
+        if (!localStorage.spotifyAccessToken)
+            localStorage.spotifyAccessToken = "{{ accessToken|default:"" }}";
+        fetch("/getWraps?accessToken=" + localStorage.spotifyAccessToken).then(data => data.json()).then(data => {
     console.log(data)
 
     if (Object.keys(data).length === 0 || data.error) {

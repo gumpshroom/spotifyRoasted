@@ -47,6 +47,7 @@ def oauthCallback(request):
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': 'Basic ' + base64.b64encode((SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET).encode('ascii')).decode('ascii')
         })
+        print(response.content)
         if response.status_code == 200:
             url = 'https://api.spotify.com/v1/me'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + response.json()['access_token']})
