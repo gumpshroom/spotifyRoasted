@@ -51,7 +51,7 @@ def oauthCallback(request):
         if response.status_code == 200:
             url = 'https://api.spotify.com/v1/me'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + response.json()['access_token']})
-
+            print(res.content)
             if res.status_code == 200:
                 try:
                     user = User.objects.get(spotify_id=res.json()['id'])
@@ -68,11 +68,21 @@ def oauthCallback(request):
 
 def generateWrap(request):
     if request.method == 'GET' and request.GET.get('accessToken'):
+        now = datetime.now()
+
+        # Format the date and time
+        formatted_date = now.strftime("%B {}, %Y at {}").format(now.day, now.strftime("%I:%M %p"))
+
+        # Remove leading zero for day if it exists
+        if now.day < 10:
+            formatted_date = formatted_date.replace(f" {now.day}", f" {now.day}")
+
+
         # get user
         try:
             user = User.objects.get(access_token=request.GET.get('accessToken'))
             wrap = {
-                'name': "Wrap from " + datetime.now().strftime("%B %-d, %Y at %-I:%M %p"),
+                'name': "Wrap from " + formatted_date,
                 'topSongRoast': "",
                 'topGenreRoast': "",
                 'topArtistRoast': "",
@@ -84,19 +94,19 @@ def generateWrap(request):
             if res.status_code == 200:
                 topSong = res.json()['items'][0]['name']
             else:
-                return HttpResponse("spotify api failed")
+                return HttpResponse("spotify api failed 1")
             url = 'https://api.spotify.com/v1/me/top/artists'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + user.access_token})
             if res.status_code == 200:
                 topArtist = res.json()['items'][0]['name']
             else:
-                return HttpResponse("spotify api failed")
+                return HttpResponse("spotify api failed2")
             url = 'https://api.spotify.com/v1/me/top/artists'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + user.access_token})
             if res.status_code == 200:
                 topGenre = res.json()['items'][0]['genres'][0]
             else:
-                return HttpResponse("spotify api failed")
+                return HttpResponse("spotify api failed 5")
             chat_completion = client.chat.completions.create(
                 messages=[
                     {
@@ -181,3 +191,7 @@ def getWrap(request):
             return HttpResponse("user not found")
     else:
         return redirect('/')
+
+
+def contact(request):
+    return render(request, "web/contact.html")
