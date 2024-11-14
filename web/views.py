@@ -86,13 +86,15 @@ def generateWrap(request):
                 'topSongRoast': "",
                 'topGenreRoast': "",
                 'topArtistRoast': "",
-                'summaryRoast': ""
+                'summaryRoast': "",
+                'topSongImage': "",
             }
             url = 'https://api.spotify.com/v1/me/top/tracks'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + user.access_token})
             topSong, topArtist, topGenre = None, None, None
             if res.status_code == 200:
                 topSong = res.json()['items'][0]['name']
+                wrap['topSongImage'] = res.json()['items'][0]['album']['images'][0]['url']
             else:
                 return HttpResponse("spotify api failed 1")
             url = 'https://api.spotify.com/v1/me/top/artists'

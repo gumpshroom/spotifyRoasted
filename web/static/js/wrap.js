@@ -1,10 +1,19 @@
 
-var textFadeIn = anime({
-    targets: '.text',
+/*var scrollPageTransition = anime({
+    targets: '.scroll-page',
     opacity: 1,
     easing: 'easeInOutQuad',
     autoplay: false
 })
-document.onscroll = function() {
-    textFadeIn.seek(textFadeIn.duration * Reveal.getProgress());
-}
+Reveal.on('slidechanged', function(event) {
+    console.log(Reveal.getProgress());
+    var element = Reveal.getSlideBackground(event.indexh, event.indexv);
+    scrollPageTransition.seek(scrollPageTransition.duration * element.getBoundingClientRect().top / window.innerHeight);
+})*/
+
+var scrollPageTransition = anime({
+    targets: '.scroll-page',
+    opacity: 1,
+    easing: 'easeInOutQuad',
+    autoplay: false
+})
