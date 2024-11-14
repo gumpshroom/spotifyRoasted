@@ -28,6 +28,31 @@
         .hover\:bg-spotify-green-dark:hover {
             background-color: #1AA84B;
         }
+
+        .names {
+            display: flex;
+            justify-content: space-between;  /* Evenly distribute the items */
+            align-items: center;
+            width: 90%;  /* Set the width to 90% of the screen */
+            margin-top: 100px;
+        }
+        .name-container {
+            text-align: center;
+        }
+        .image-container img {
+            width: 200px;  /* Set image width */
+            height: 200px;  /* Set image height to match width */
+            border-radius: 50%;  /* Make the image circular */
+            object-fit: cover;  /* Ensures the image fills the circle without distortion */
+        }
+        .image-name-container {
+            margin-top: 10px;
+        }
+        .email {
+            margin-top: 5px;  /* Space between name and email */
+            font-size: 14px;
+            color: #555;  /* Grey color for email */
+        }
     </style>
 
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
@@ -39,6 +64,11 @@
         <h1 class="text-4xl font-bold my-4">Spotify Roasted</h1>
         <button class="px-6 py-2 bg-spotify-green text-white rounded hover:bg-spotify-green-dark transition" onclick="window.location.href='/oauth'">Log in with Spotify</button>
     </main>
+
+    <!-- Header -->
+    <div class="header">
+        <h2>Contact the Developer Team</h2>
+    </div>
 
     <!-- Developer Information -->
     <div class="names">
