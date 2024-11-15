@@ -9,9 +9,24 @@
     <!-- Tailwind CSS from CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
+
     <title>Spotify Roasted</title>
 
     <style>
+        .rubik-beastly-regular {
+            font-family: "Rubik Beastly", system-ui;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .signin {
+            content: "";
+            display: block;
+            width: 40%;
+            color: #1ED860;
+        }
 
         body {
             /* Uncomment this line if you want to use a background image */
@@ -20,6 +35,7 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            background-color: #002608
         }
 
         .bg-spotify-green {
@@ -66,14 +82,21 @@
 <body class="light">
 
     <main class="text-center">
-        <h1 class="text-4xl font-bold my-4">Spotify Roasted</h1>
-        <button class="px-6 py-2 bg-spotify-green text-white rounded hover:bg-spotify-green-dark transition" onclick="window.location.href='/oauth'">Log in with Spotify</button>
+       <nav>
+          <h6 class="font-black" style="font-size: 100px; color: #1ED860">Spotify</h6>
+          <h6 class="rubik-beastly-regular" style="font-size: 100px; color: orangered">Roasted</h6>
+        </nav>
+        <div class="justify-items-center">
+            <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-400 p-4 border-4 justify-items-center">
+                <div class="signin" style="display: block; width: 50%; height: 200px;">
+                    <a class="hover:underline font-bold text-center" href="/oauth" style="font-size: 40px" >Log in with
+                        <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" style="width: 500px; height: 80px;">
+                    </a>
+                </div>
+            </article>
+        </div>
     </main>
-
-    <!-- Header -->
-    <div class="header">
-        <h2>Contact the Developer Team</h2>
-    </div>
+    
 
     <!-- Developer Information -->
     <div class="names">
