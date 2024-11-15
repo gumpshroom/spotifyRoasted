@@ -1,14 +1,56 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Spotify Roasted</title>
-</head>
-<body>
-    <a href="/oauth">Log in with Spotify</a>
-    <br>
-    <a href="/contact" style="display: inline-block; margin-top: 10px;">
-        <button>Contact the Developers</button>
-    </a>
-</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css" rel="stylesheet">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+    <style>
+        .rubik-beastly-regular {
+            font-family: "Rubik Beastly", system-ui;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .signin {
+            content: "";
+            display: block;
+            width: 40%;
+            color: #1ED860;
+        }
+        .body {
+            background-color: #002A09;
+        }
+    </style>
+  </head>
+  <body class="body">
+    <main class="responsive">
+        <nav class="Top center-align padding">
+              <h6 class="bold strong" style="font-size: 100px; color: #1ED860 ">Spotify</h6>
+              <h6 class="bold strong rubik-beastly-regular" style="font-size: 100px; color: orangered">Roasted</h6>
+        </nav>
+
+        <div class="padding">
+            <article class="responsive large-padding center center-align black large-round">
+                <div class="center round signin" style="display: block; width: 50%; height: 200px;">
+                    <a class="underline center-align" href="/oauth" style="font-size: 50px" >Log in with
+                        <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" style="width: 300px; height: 100px;">
+                    </a>
+                </div>
+            </article>
+        </div>
+
+        <nav class="bottom black">
+          <a href="/contact" style="display: inline-block; margin-top: 10px;">
+            <button>Contact the Developers</button>
+          </a>
+        </nav>
+    </main>
+  </body>
 </html>
