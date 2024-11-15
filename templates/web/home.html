@@ -16,9 +16,14 @@
     <title>Spotify Roasted</title>
 
     <style>
-        .rubik-beastly-regular {
-            font-family: "Rubik Beastly", system-ui;
+        .johnny-torch {
+            font-family: "Johnny Torch", system-ui;
             font-weight: 400;
+            font-style: normal;
+        }
+        .circular-black {
+            font-family: "Circular Spotify Text Black", system-ui;
+            font-weight: 700;
             font-style: normal;
         }
         .signin {
@@ -30,12 +35,14 @@
 
         body {
             /* Uncomment this line if you want to use a background image */
-            /* background-image: url("{% static 'images/background.png' %}"); */
+            /*background-image: url("{% static 'images/spotifybackground.png' %}");*/
+            background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%, #ff8c00);
+            color: white; /* Ensures text is visible on the dark background */
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: cover;
-            background-color: #002608
+            background-size: 100%;
+            background-color: #0a0a0a;
         }
 
         .bg-spotify-green {
@@ -83,23 +90,24 @@
 
     <main class="text-center">
        <nav>
-          <h6 class="font-black" style="font-size: 100px; color: #1ED860">Spotify</h6>
-          <h6 class="rubik-beastly-regular" style="font-size: 100px; color: orangered">Roasted</h6>
+          <h6 class="circular-black" style="font-size: 100px; color: #1ED860">Spotify</h6>
+          <h6 class="johnny-torch" style="font-size: 100px; color: orangered">Roasted</h6>
         </nav>
         <div class="justify-items-center">
-            <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-400 p-4 border-4 justify-items-center">
-                <div class="signin" style="display: block; width: 50%; height: 200px;">
-                    <a class="hover:underline font-bold text-center" href="/oauth" style="font-size: 40px" >Log in with
-                        <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" style="width: 500px; height: 80px;">
-                    </a>
-                </div>
-            </article>
+            <a href="/oauth" style="display: block; text-decoration: none;">
+                <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-400 p-4 border-4 justify-items-center">
+                    <div class="signin" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 500px; height: 200px; text-align: center;">
+                        <span style="font-size: 40px; color: #1DB954; font-weight: bold;">Log in with</span>
+                        <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" style="width: 95%; height: 80%;">
+                    </div>
+                </article>
+            </a>
         </div>
     </main>
     
 
     <!-- Developer Information -->
-    <div class="names">
+    <div class="names" style="display: flex; align-items: center; justify-content: center; gap: 150px; width: 100%; font-family: 'Circular Spotify Text Black'; font-weight: initial" >
         <!-- Aaron Luu -->
         <div class="image-name-container">
             <div class="image-container">
@@ -129,7 +137,7 @@
             </div>
             <div class="name-container">
                 <p>Nathan Nguyen</p>
-                <p class="email">nathan@example.com</p> <!-- Email Address -->
+                <p class="email">nnguyen402@gatech.edu</p> <!-- Email Address -->
             </div>
         </div>
 
