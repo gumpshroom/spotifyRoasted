@@ -1,17 +1,20 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Spotify Roasted</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.css" rel="stylesheet">
-    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.12/dist/cdn/beer.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+
+    <title>Spotify Roasted</title>
+
     <style>
         .rubik-beastly-regular {
             font-family: "Rubik Beastly", system-ui;
@@ -24,33 +27,138 @@
             width: 40%;
             color: #1ED860;
         }
-        .body {
-            background-color: #002A09;
+
+        body {
+            /* Uncomment this line if you want to use a background image */
+            /* background-image: url("{% static 'images/background.png' %}"); */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .bg-spotify-green {
+            background-color: #1DB954;
+        }
+        .hover\:bg-spotify-green-dark:hover {
+            background-color: #1AA84B;
+        }
+
+        .header {
+            position: absolute;
+            top: 10px;
+            text-align: center;
+        }
+        .names {
+            display: flex;
+            justify-content: space-between;  /* Evenly distribute the items */
+            align-items: center;
+            width: 90%;  /* Set the width to 90% of the screen */
+            margin-top: 100px;
+        }
+        .name-container {
+            text-align: center;
+        }
+        .image-container img {
+            width: 200px;  /* Set image width */
+            height: 200px;  /* Set image height to match width */
+            border-radius: 50%;  /* Make the image circular */
+            object-fit: cover;  /* Ensures the image fills the circle without distortion */
+        }
+        .image-name-container {
+            margin-top: 10px;
+        }
+        .email {
+            margin-top: 5px;  /* Space between name and email */
+            font-size: 14px;
+            color: #555;  /* Grey color for email */
         }
     </style>
-  </head>
-  <body class="body">
-    <main class="responsive">
-        <nav class="Top center-align padding">
-              <h6 class="bold strong" style="font-size: 100px; color: #1ED860 ">Spotify</h6>
-              <h6 class="bold strong rubik-beastly-regular" style="font-size: 100px; color: orangered">Roasted</h6>
-        </nav>
 
-        <div class="padding">
-            <article class="responsive large-padding center center-align black large-round">
-                <div class="center round signin" style="display: block; width: 50%; height: 200px;">
-                    <a class="underline center-align" href="/oauth" style="font-size: 50px" >Log in with
-                        <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" style="width: 300px; height: 100px;">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+</head>
+
+<body class="light">
+
+    <main class="text-center">
+       <nav>
+          <h6 class="font-black" style="font-size: 100px; color: #1ED860">Spotify</h6>
+          <h6 class="rubik-beastly-regular" style="font-size: 100px; color: orangered">Roasted</h6>
+        </nav>
+        <div class="justify-items-center">
+            <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-400 p-4 border-4 justify-items-center">
+                <div class="signin" style="display: block; width: 50%; height: 200px;">
+                    <a class="hover:underline font-bold text-center" href="/oauth" style="font-size: 40px" >Log in with
+                        <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" style="width: 500px; height: 80px;">
                     </a>
                 </div>
             </article>
         </div>
-
-        <nav class="bottom black">
-          <a href="/contact" style="display: inline-block; margin-top: 10px;">
-            <button>Contact the Developers</button>
-          </a>
-        </nav>
     </main>
-  </body>
+
+    <!-- Header -->
+    <div class="header">
+        <h2>Contact the Developer Team</h2>
+    </div>
+
+    <!-- Developer Information -->
+    <div class="names">
+        <!-- Aaron Luu -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/AaronLuu.PNG' %}" alt="Aaron Luu">
+            </div>
+            <div class="name-container">
+                <p>Aaron Luu</p>
+                <p class="email">aluu31@gatech.edu</p> <!-- Email Address -->
+            </div>
+        </div>
+
+        <!-- Patrick Del-rio -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/PatrickDelRio.PNG' %}" alt="Patrick Del-rio">
+            </div>
+            <div class="name-container">
+                <p>Patrick Del-rio</p>
+                <p class="email">pdelrio@example.com</p> <!-- Email Address -->
+            </div>
+        </div>
+
+        <!-- Nathan Nguyen -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/NathanNguyen.PNG' %}" alt="Nathan Nguyen">
+            </div>
+            <div class="name-container">
+                <p>Nathan Nguyen</p>
+                <p class="email">nathan@example.com</p> <!-- Email Address -->
+            </div>
+        </div>
+
+        <!-- Eric Yang -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/EricYang.PNG' %}" alt="Eric Yang">
+            </div>
+            <div class="name-container">
+                <p>Eric Yang</p>
+                <p class="email">eric.yang@example.com</p> <!-- Email Address -->
+            </div>
+        </div>
+
+        <!-- Bao Nguyen -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/BaoNguyen.PNG' %}" alt="Bao Nguyen">
+            </div>
+            <div class="name-container">
+                <p>Bao Nguyen</p>
+                <p class="email">bnguyen324@gatech.edu</p> <!-- Email Address -->
+            </div>
+        </div>
+    </div>
+
+</body>
+
 </html>
