@@ -6,9 +6,9 @@
     <script>
         var welcome = {{ welcomeBack|default:"false" }};
         if (welcome) {
-            alert("welcome back!")
+            alert("Welcome back!")
         } else {
-            alert("welcome! create a wrap to get started")
+            alert("Welcome! Create a wrap to get started")
         }
         //store token for login session
         if (!localStorage.spotifyAccessToken)
