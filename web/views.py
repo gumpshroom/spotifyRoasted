@@ -47,14 +47,18 @@ def oauthCallback(request):
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': 'Basic ' + base64.b64encode((SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET).encode('ascii')).decode('ascii')
         })
-        print(response.content)
+
         if response.status_code == 200:
             url = 'https://api.spotify.com/v1/me'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + response.json()['access_token']})
-            print(res.content)
+
             if res.status_code == 200:
                 try:
                     user = User.objects.get(spotify_id=res.json()['id'])
+                    print('this my user!!!')
+                    print(user.access_token)
+                    print(user.wraps)
+                    print(user.spotify_id)
                     user.access_token = response.json()['access_token']
                     user.save()
                     return render(request, 'web/roasted.html', {'accessToken': response.json()['access_token'], 'welcomeBack': 'true'})
