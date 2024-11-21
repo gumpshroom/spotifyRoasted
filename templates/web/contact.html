@@ -1,0 +1,155 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact the Developer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
+
+
+    <style>
+        body {
+            background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%, #ff8c00);
+            color: white; /* Ensures text is visible on the dark background */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-color: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .circular-black {
+            font-family: "Circular Spotify Text Black", system-ui;
+            font-weight: 700;
+            font-style: normal;
+        }
+        .header {
+            position: absolute;
+            top: 10px;
+            text-align: center;
+        }
+        .home-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .names {
+            display: flex;
+            justify-content: space-between;  /* Evenly distribute the items */
+            align-items: center;
+            width: 90%;  /* Set the width to 90% of the screen */
+            margin-top: 100px;
+        }
+        .name-container {
+            text-align: center;
+        }
+        .image-container img {
+            width: 150px;  /* Set image width */
+            height: 150px;  /* Set image height to match width */
+            border-radius: 50%;  /* Make the image circular */
+            object-fit: cover;  /* Ensures the image fills the circle without distortion */
+        }
+        .image-name-container {
+            margin-top: 10px;
+        }
+        .email {
+            margin-top: 5px;  /* Space between name and email */
+            font-size: 14px;
+            color: #555;  /* Grey color for email */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="circular-black" style="font-size: 30px;">
+        <h2 style="color: #D17300">Contact the Developer Team</h2>
+    </div>
+
+    <!-- Developer Information -->
+    <div class="names">
+        <!-- Aaron Luu -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/AaronLuu.PNG' %}" alt="Aaron Luu">
+            </div>
+            <div class="name-container">
+                <p class="circular-black" style="color: #D17300">Aaron Luu</p>
+                <p class="email circular-black" style="color: #D17300">aluu31@gatech.edu</p> <!-- Email Address -->
+            </div>
+        </div>
+
+        <!-- Patrick Del-rio -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/PatrickDelRio.PNG' %}" alt="Patrick Del-rio">
+            </div>
+            <div class="name-container">
+                <p class="circular-black" style="color: #D17300">Patrick Del Rio</p>
+                <p class="email circular-black" style="color: #D17300">prio3@gatech.edu</p> <!-- Email Address -->
+            </div>
+        </div>
+
+        <!-- Nathan Nguyen -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/NathanNguyen.PNG' %}" alt="Nathan Nguyen">
+            </div>
+            <div class="name-container">
+                <p class="circular-black" style="color: #D17300">Nathan Nguyen</p>
+                <p class="email circular-black" style="color: #D17300">nathan@example.com</p> <!-- Email Address -->
+            </div>
+        </div>
+
+        <!-- Eric Yang -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/EricYang.PNG' %}" alt="Eric Yang">
+            </div>
+            <div class="name-container">
+                <p class="circular-black" style="color: #D17300">Eric Yang</p>
+                <p class="email circular-black" style="color: #D17300">eric.yang@example.com</p> <!-- Email Address -->
+            </div>
+        </div>
+
+        <!-- Bao Nguyen -->
+        <div class="image-name-container">
+            <div class="image-container">
+                <img src="{% static 'images/BaoNguyen.PNG' %}" alt="Bao Nguyen">
+            </div>
+            <div class="name-container">
+                <p class="circular-black" style="color: #D17300">Bao Nguyen</p>
+                <p class="email circular-black" style="color: #D17300">bnguyen324@gatech.edu</p> <!-- Email Address -->
+            </div>
+        </div>
+    </div>
+    <div class="justify-items-center p-8">
+        <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-200 p-4 border-4 text-center max-w-4xl" style="display: block; text-decoration: none;">
+            <span class="circular-black" style="color: #D17300">Spotify Roasted is a project designed to make a customized "Spotify Wrap" that analyzes your Spotify activity
+            and pokes a little fun at your music tastes. You can generate new wraps whenever you want and they are all
+            stored if you want to go back to previous wraps. If you want to share your warps we have links to share to
+            FaceBook and LinkedIn!
+            </span>
+        </article>
+
+    </div>
+    <div class="justify-items-center p-16">
+        <a href="{% url 'home' %}">
+            <article class="rounded-xl flex-nowrap box-border h-20 w-150 p-4 border-4 justify-items-center">
+                <span class="circular-black" style="font-size: 24px; color: #1DB954; font-weight: bold;">Go Home</span>
+            </article>
+        </a>
+
+    </div>
+
+</body>
+</html>

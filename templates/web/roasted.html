@@ -6,28 +6,28 @@
     <script>
         var welcome = {{ welcomeBack|default:"false" }};
         if (welcome) {
-            alert("welcome back!")
+            alert("Welcome back!")
         } else {
-            alert("welcome! create a wrap to get started")
+            alert("Welcome! Create a wrap to get started")
         }
         //store token for login session
-        sessionStorage.spotifyAccessToken = "{{ accessToken|default:"" }}";
-        fetch("/getWraps?accessToken={{ accessToken|default:"" }}").then(data => data.json()).then(data => {
-    console.log(data)
+        localStorage.spotifyAccessToken = "{{ accessToken|default:"" }}";
+        fetch("/getWraps?accessToken=" + localStorage.spotifyAccessToken).then(data => data.json()).then(data => {
+            console.log(data)
 
-    if (Object.keys(data).length === 0 || data.error) {
-        document.getElementById("wraps").innerHTML = "No wraps found. Create a wrap to get started!";
-    } else {
-        var wraps = JSON.parse(data).wrapNames
-        for (var i = 0; i < wraps.length; i++) {
-            var wrapItem = document.createElement("a");
-            wrapItem.innerHTML = wraps[i];
-            wrapItem.href = "/getWrap?accessToken={{ accessToken|default:"" }}&wrapId=" + i;
-            document.getElementById("wraps").appendChild(wrapItem);
-            document.getElementById("wraps").appendChild(document.createElement("br"));
-        }
-    }
-})
+            if (Object.keys(data).length === 0 || data.error) {
+                document.getElementById("wraps").innerHTML = "No wraps found. Create a wrap to get started!";
+            } else {
+                var wraps = JSON.parse(data).wrapNames
+                for (var i = 0; i < wraps.length; i++) {
+                    var wrapItem = document.createElement("a");
+                    wrapItem.innerHTML = wraps[i];
+                    wrapItem.href = "/getWrap?accessToken={{ accessToken|default:"" }}&wrapId=" + i;
+                    document.getElementById("wraps").appendChild(wrapItem);
+                    document.getElementById("wraps").appendChild(document.createElement("br"));
+                }
+            }
+        })
     </script>
 
 </head>

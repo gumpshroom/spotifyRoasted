@@ -11,31 +11,192 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"
             integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="{% static 'dist/reset.css' %}">
-		<link rel="stylesheet" href="{% static 'dist/reveal.css' %}">
-		<link rel="stylesheet" href="{% static 'dist/theme/black.css' %}">
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="{% static 'plugin/highlight/monokai.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/reveal.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/theme/dracula.css' %}">
+    <style>
+        .left {
+            text-align: left;
+        }
+
+        .small {
+            font-size: 40%;
+            word-break: break-word;
+            margin-top: 3vh;
+        }
+
+        .mid {
+            font-size: 65%;
+            word-break: break-word;
+            font-style: italic;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            --ratio: 10vh / 10vw;
+
+            font-size: calc(55px + (26 - 14) * ((100vh - 700px) / (1000 - 700)));
+            /*font-size: calc(80px * var(--ratio) * 2);*/
+            word-break: break-word;
+        }
+
+        .current-fragment {
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+        }
+
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="reveal">
-			<div class="slides">
-				<section>{{ wrap.topSongRoast }}</section>
-				<section>{{ wrap.topGenreRoast }}</section>
-                <section>{{ wrap.topArtistRoast }}</section>
-                <section>{{ wrap.summaryRoast }}</section>
-			</div>
-		</div>
+    <div class="slides" id="slidesContainer">
+
+    </div>
+</div>
 <script src="{% static '/dist/reveal.js' %}"></script>
 
 <script>
-			Reveal.initialize({
-				hash: true,
-				plugins: []
-			});
-		</script>
+    function splitToSentences(string) {
+        var sentences = [];
+        //respect brackets
+        var inBracket = false;
+        var inQuote = false;
+        var lastIndex = 0;
+        for (var i = 0; i < string.length; i++) {
+            if (string[i] === "(") {
+                inBracket = true;
+            } else if (string[i] === ")") {
+                inBracket = false;
+            }
+            if (string[i] === "\"") {
+                inQuote = !inQuote;
+            }
+            if ((string[i] === "." || string[i] === "?" || string[i] === "!") && !inBracket && !inQuote && (i === string.length - 1 || string[i + 2].match(/[A-Z1-9]/))) {
+                sentences.push(string.substring(lastIndex, i + 1));
+                lastIndex = i + 2;
+            }
+        }
+        return sentences
+    }
 
+    function randomColor() {
+        var letters = '456789A';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 7)];
+        }
+        return color;
+    }
+
+    var topSongRoast = "{{ wrap.topSongRoast }}";
+    var topGenreRoast = "{{ wrap.topGenreRoast }}";
+    var topArtistRoast = "{{ wrap.topArtistRoast }}";
+    var summaryRoast = "{{ wrap.summaryRoast }}";
+    var varNames = ["top Song Roast", "top Genre Roast", "top Artist Roast", "summary Roast"];
+    //split to sentences
+    var topSongRoastSentences = splitToSentences(topSongRoast);
+    var topGenreRoastSentences = splitToSentences(topGenreRoast);
+    var topArtistRoastSentences = splitToSentences(topArtistRoast);
+    var summaryRoastSentences = splitToSentences(summaryRoast);
+    console.log(topSongRoast)
+    console.log(topSongRoastSentences)
+    //generate slides
+    var container = document.getElementById("slidesContainer");
+
+
+    for (var j = 0; j < varNames.length; j++) {
+        var sentences = eval(varNames[j].replaceAll(' ', '') + "Sentences");
+        var section = document.createElement("section");
+        section.classList.add('slide')
+        section.classList.add('large-padding')
+        var color = randomColor();
+        section.setAttribute('tint', color)
+        if (j === 0) {
+            section.innerHTML = "<h3 class='center right-margin fragment left fade-in left-align'>Welcome to Spotify Roasted.</h3>";
+        } else {
+            section.innerHTML = "<h3 class='center right-margin left fade-in-then-semi-out left-align'>your " + varNames[j].replace(' Roast', '') + "</h3>";
+        }
+        //section.setAttribute('data-background-gradient', 'linear-gradient(to right, ' + color + ', rgba(0,0,0,0.2))') //'rgba(0,0,0,0.5)), url("{{ wrap.topSongImage }}")');
+
+        section.setAttribute('data-transition', 'fade')
+
+        section.innerHTML += "<div class='center large-margin right-margin fragment mid left fade-in-then-semi-out left-align'><p>" + sentences[0] + "</p><hr style='visibility: hidden'></div>";
+        for (var i = 1; i < sentences.length; i++) {
+            section.innerHTML += "<p data-id='p" + i + "' class='center large-margin right-margin fragment left small fade-in-then-semi-out left-align'>" + sentences[i] + "</p>";
+        }
+        container.appendChild(section);
+    }
+
+
+</script>
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        view: 'scroll',
+        scrollProgress: true,
+        center: false,
+        display: 'block',
+        disableLayout: true,
+        plugins: []
+    });
+
+    var viewportElement = Reveal.getViewportElement();
+    viewportElement.classList.add('scroll-page');
+    viewportElement.classList.add('shadow-right')
+
+    var nextSlide = function () {
+        console.log("nextSlide");
+        const viewportElement = Reveal.getViewportElement();
+        viewportElement.scrollTo({
+            "top": viewportElement.scrollTop + viewportElement.offsetHeight,
+            "behavior": "smooth"
+        });
+    }
+
+    var prevSlide = function () {
+        console.log("prevSlide");
+        const viewportElement = Reveal.getViewportElement();
+
+        viewportElement.scrollTo({
+            "top": viewportElement.scrollTop - viewportElement.offsetHeight,
+            "behavior": "smooth"
+        });
+    }
+
+
+    Reveal.on('ready', function (event) {
+        Reveal.slide(0, 0, 0);
+        setTimeout(nextSlide, 800);
+    });
+    Reveal.on('slidechanged', function (event) {
+        var newcolor = event.currentSlide.getAttribute('tint');
+        var oldcolor = event.previousSlide.getAttribute('tint');
+        console.log(newcolor)
+        var viewportElement = Reveal.getViewportElement();
+        console.log(viewportElement)
+        anime({
+            targets: '.slide-background',
+            keyframes: [
+                {backgroundColor: oldcolor},
+                {backgroundColor: newcolor}
+            ],
+            autoplay: true,
+            duration: 300,
+            //direction: 'alternate',
+            easing: 'cubicBezier(0,.69,0,1)'
+        })
+    });
+
+    Reveal.addKeyBinding({keyCode: 38, key: 'UP', description: 'Previous slide'}, prevSlide);
+    Reveal.addKeyBinding({keyCode: 37, key: 'LEFT', description: 'Previous slide'}, prevSlide);
+    Reveal.addKeyBinding({keyCode: 40, key: 'DOWN', description: 'Next slide'}, nextSlide);
+    Reveal.addKeyBinding({keyCode: 39, key: 'RIGHT', description: 'Next slide'}, nextSlide);
+</script>
 
 
 <script src="{% static 'js/wrap.js' %}"></script>
