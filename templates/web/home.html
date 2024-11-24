@@ -81,6 +81,23 @@
             font-size: 14px;
             color: #555;  /* Grey color for email */
         }
+
+        .button {
+            display: inline-block;
+            padding: 15px 30px; /* Button size */
+            background-color: #1DB954; /* Spotify green */
+            color: white;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .button:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #1AA84B; /* Darker green on hover */
+            cursor: pointer; /* Change cursor on hover */
+        }
     </style>
 
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
@@ -106,8 +123,8 @@
     </main>
     <div class="justify-items-center p-24">
         <a href="/contact" style="display: block; text-decoration:none;">
-            <article class="rounded-xl flex-nowrap box-border h-20 w-150 p-4 border-4 justify-items-center">
-                <span style="font-size: 20px; color: #1DB954; font-weight: bold;"> Contact the Developers</span>
+            <article class="button">
+                <span style="font-size: 24px; color: #ffffff; font-weight: bold; font-family: 'Bebas Neue', sans-serif;"> Contact the Developers</span>
             </article>
         </a>
     </div>

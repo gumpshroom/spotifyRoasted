@@ -1,6 +1,147 @@
 {% load static %}
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+    <style>
+        .johnny-torch {
+            font-family: "Johnny Torch", system-ui;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .circular-black {
+            font-family: "Circular Spotify Text Black", system-ui;
+            font-weight: 700;
+            font-style: normal;
+        }
+        .signin {
+            content: "";
+            display: block;
+            width: 40%;
+            color: #1ED860;
+        }
+
+        body {
+            /* Uncomment this line if you want to use a background image */
+            /*background-image: url("{% static 'images/spotifybackground.png' %}");*/
+            background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%, #ff8c00);
+            color: white; /* Ensures text is visible on the dark background */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-color: #0a0a0a;
+        }
+
+        .bg-spotify-green {
+            background-color: #1DB954;
+        }
+        .hover\:bg-spotify-green-dark:hover {
+            background-color: #1AA84B;
+        }
+
+        .header {
+            position: absolute;
+            top: 10px;
+            text-align: center;
+        }
+        .names {
+            display: flex;
+            justify-content: space-between;  /* Evenly distribute the items */
+            align-items: center;
+            width: 90%;  /* Set the width to 90% of the screen */
+            margin-top: 100px;
+        }
+        .name-container {
+            text-align: center;
+        }
+        .image-container img {
+            width: 200px;  /* Set image width */
+            height: 200px;  /* Set image height to match width */
+            border-radius: 50%;  /* Make the image circular */
+            object-fit: cover;  /* Ensures the image fills the circle without distortion */
+        }
+        .image-name-container {
+            margin-top: 10px;
+        }
+
+        .wrap-container {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally */
+            width: 100%; /* Ensure it spans full screen width */
+        }
+
+        .wrap-box {
+            width: 90%; /* Take 90% of the screen width */
+            max-width: 800px; /* Limit the maximum width */
+            margin: 10px 0; /* Add space between wraps */
+            padding: 30px; /* Internal padding */
+            background-color: rgba(29, 185, 84, 0.9); /* Spotify green */
+            color: white;
+            border-radius: 50px; /* Rounded corners */
+            text-decoration: none; /* Remove underline for links */
+            transition: background-color 0.2s, transform 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .wrap-box:hover {
+            background-color: #1AA84B; /* Darker green on hover */
+            transform: scale(1.02); /* Slightly enlarge on hover */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+
+        .wrap-title {
+            font-size: 28px; /* Large title font size */
+            font-weight: bold;
+            margin-bottom: 8px; /* Space below the title */
+        }
+
+        .wrap-meta {
+            font-size: 20px; /* Smaller text for metadata */
+            color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+        }
+
+        .create-wrap-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            margin-bottom: 10px; /* Add space between the wraps and the button */
+        }
+
+        .create-wrap-button {
+            display: inline-block;
+            padding: 15px 30px; /* Button size */
+            background-color: #1DB954; /* Spotify green */
+            color: white;
+            font-size: 28px;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .create-wrap-button:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #1AA84B; /* Darker green on hover */
+            cursor: pointer; /* Change cursor on hover */
+        }
+
+        .welcome {
+            font-family: 'Bebas Neue', sans-serif;
+        }
+    </style>
+
     <meta charset="UTF-8">
     <title>Spotify Roasted</title>
     <script>
@@ -12,31 +153,73 @@
         }
         //store token for login session
         localStorage.spotifyAccessToken = "{{ accessToken|default:"" }}";
-        fetch("/getWraps?accessToken=" + localStorage.spotifyAccessToken).then(data => data.json()).then(data => {
-            console.log(data)
+
+        fetch("https://api.spotify.com/v1/me", {
+            headers: {
+                Authorization: `Bearer ${localStorage.spotifyAccessToken}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                const username = data.display_name || "User"; // Default to "User" if display_name is missing
+                document.getElementById("welcome-message").innerText = `Welcome, ${username}!`;
+            })
+            .catch(error => {
+                console.error("Error fetching Spotify username:", error);
+                document.getElementById("welcome-message").innerText = "Welcome!";
+            });
+
+        fetch("/getWraps?accessToken=" + localStorage.spotifyAccessToken).then(response => response.json()).then(data => {
+            console.log(data);
+
+            const wrapsContainer = document.getElementById("wraps");
 
             if (Object.keys(data).length === 0 || data.error) {
-                document.getElementById("wraps").innerHTML = "No wraps found. Create a wrap to get started!";
-            } else {
-                var wraps = JSON.parse(data).wrapNames
-                for (var i = 0; i < wraps.length; i++) {
-                    var wrapItem = document.createElement("a");
-                    wrapItem.innerHTML = wraps[i];
-                    wrapItem.href = "/getWrap?accessToken={{ accessToken|default:"" }}&wrapId=" + i;
-                    document.getElementById("wraps").appendChild(wrapItem);
-                    document.getElementById("wraps").appendChild(document.createElement("br"));
-                }
+                wrapsContainer.innerHTML = "No wraps found. Create a wrap to get started!";
+            }
+            else {
+                const wraps = JSON.parse(data).wrapNames;
+
+                wraps.forEach((wrapName, index) => {
+                    // Create the wrap box
+                    const wrapBox = document.createElement("a");
+                    wrapBox.className = "wrap-box bg-spotify-green hover:bg-spotify-green-dark py-2 px-4 rounded-2xl text-white mb-4 block";
+                    wrapBox.href = `/getWrap?accessToken=${localStorage.spotifyAccessToken}&wrapId=${index}`;
+
+                    const match = wrapName.match(/from (.+?) at (.+)$/);
+                    if (match) {
+                        const formattedDate = match[1]; // e.g., "November 24, 2024"
+                        const formattedTime = match[2]; // e.g., "02:00 PM"
+
+                        const wrapTitle = document.createElement("div");
+                        wrapTitle.className = "wrap-title text-xl font-semibold";
+                        wrapTitle.innerText = `Wrap #${index + 1}`;
+
+                        const wrapMeta = document.createElement("div");
+                        wrapMeta.className = "wrap-meta text-sm";
+                        wrapMeta.innerText = `Roasted on ${formattedDate} at ${formattedTime}`;
+
+                        wrapBox.appendChild(wrapTitle);
+                        wrapBox.appendChild(wrapMeta);
+                        wrapsContainer.appendChild(wrapBox);
+                    }
+                    else {
+                        console.log(`Invalid wrap name format for wrap #${index + 1}`);
+                    }
+                });
             }
         })
     </script>
 
 </head>
-<body>
-<div id="wraps">
+<div id="welcome-message" class="welcome text-center circular-black" style="font-size: 60px; color: #1ED860"></div>
 
+<div class="create-wrap-container">
+    <a href="/generateWrap?accessToken={{ accessToken|default:"" }}" class="create-wrap-button">Create Wrap</a>
 </div>
-<br>
-<a href="/generateWrap?accessToken={{ accessToken|default:"" }}">Create Wrap</a>
+
+<div class="wrap-container" id="wraps"></div>
+
 <script src="{% static 'js/roasted.js' %}"></script>
 </body>
 </html>
