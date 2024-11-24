@@ -3,11 +3,13 @@ from django.http import HttpResponse
 from groq import Groq
 from web.models import User
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 import json
 import requests
 import base64
-
-APP_URL = 'http://localhost:8000'
+load_dotenv()
+APP_URL = os.getenv('APP_URL')
 
 data = json.load(open('auth.json'))
 GROQ_KEY = data['groq']

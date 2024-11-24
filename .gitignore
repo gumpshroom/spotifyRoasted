@@ -3,3 +3,4 @@
 auth.json
 run.sh
 *.sqlite3
+.env
