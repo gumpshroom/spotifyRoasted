@@ -202,4 +202,11 @@ def getWrap(request):
 
 
 def contact(request):
-    return render(request, "web/contact.html")
+    developers = [
+        {"name": "Aaron Luu", "email": "aluu31@gatech.edu", "image": "images/AaronLuu.PNG"},
+        {"name": "Patrick Del Rio", "email": "prio3@gatech.edu", "image": "images/PatrickDelRio.PNG"},
+        {"name": "Nathan Nguyen", "email": "nathan@example.com", "image": "images/NathanNguyen.PNG"},
+        {"name": "Eric Yang", "email": "eric.yang@example.com", "image": "images/EricYang.PNG"},
+        {"name": "Bao Nguyen", "email": "bnguyen324@gatech.edu", "image": "images/BaoNguyen.PNG"}
+    ]
+    return render(request, "web/contact.html", {'developers': developers})
