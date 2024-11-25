@@ -11,23 +11,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="{% static 'dist/theme/dracula.css' %}" rel="stylesheet">
+
 
     <style>
-        .johnny-torch {
-            font-family: "Johnny Torch", system-ui;
-            font-weight: 400;
-            font-style: normal;
-        }
         .circular-black {
             font-family: "Circular Spotify Text Black", system-ui;
             font-weight: 700;
             font-style: normal;
-        }
-        .signin {
-            content: "";
-            display: block;
-            width: 40%;
-            color: #1ED860;
         }
 
         body {
@@ -49,31 +40,6 @@
             background-color: #1AA84B;
         }
 
-        .header {
-            position: absolute;
-            top: 10px;
-            text-align: center;
-        }
-        .names {
-            display: flex;
-            justify-content: space-between;  /* Evenly distribute the items */
-            align-items: center;
-            width: 90%;  /* Set the width to 90% of the screen */
-            margin-top: 100px;
-        }
-        .name-container {
-            text-align: center;
-        }
-        .image-container img {
-            width: 200px;  /* Set image width */
-            height: 200px;  /* Set image height to match width */
-            border-radius: 50%;  /* Make the image circular */
-            object-fit: cover;  /* Ensures the image fills the circle without distortion */
-        }
-        .image-name-container {
-            margin-top: 10px;
-        }
-
         .wrap-container {
             display: flex;
             flex-direction: column; /* Stack items vertically */
@@ -91,7 +57,7 @@
             border-radius: 50px; /* Rounded corners */
             text-decoration: none; /* Remove underline for links */
             transition: background-color 0.2s, transform 0.2s;
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: var(--r-main-font);
         }
 
         .wrap-box:hover {
@@ -102,13 +68,14 @@
 
         .wrap-title {
             font-size: 28px; /* Large title font size */
-            font-weight: bold;
             margin-bottom: 8px; /* Space below the title */
+            font-weight: bold;
         }
 
         .wrap-meta {
             font-size: 20px; /* Smaller text for metadata */
             color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+            font-style: italic;
         }
 
         .create-wrap-container {
@@ -139,6 +106,28 @@
 
         .welcome {
             font-family: 'Bebas Neue', sans-serif;
+            font-size: 75px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px; /* Button size */
+            background-color: black;
+            color: white;
+            font-size: 28px;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        .button:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #1AA84B; /* Darker green on hover */
+            cursor: pointer; /* Change cursor on hover */
         }
     </style>
 
@@ -146,11 +135,11 @@
     <title>Spotify Roasted</title>
     <script>
         var welcome = {{ welcomeBack|default:"false" }};
-        if (welcome) {
-            alert("Welcome back!")
-        } else {
-            alert("Welcome! Create a wrap to get started")
-        }
+        {#if (welcome) {#}
+        {#    alert("Welcome back!")#}
+        {#} else {#}
+        {#    alert("Welcome! Create a wrap to get started")#}
+        {#}#}
         //store token for login session
         localStorage.spotifyAccessToken = "{{ accessToken|default:"" }}";
 
@@ -192,7 +181,7 @@
                         const formattedTime = match[2]; // e.g., "02:00 PM"
 
                         const wrapTitle = document.createElement("div");
-                        wrapTitle.className = "wrap-title text-xl font-semibold";
+                        wrapTitle.className = "wrap-title text-xl";
                         wrapTitle.innerText = `Wrap #${index + 1}`;
 
                         const wrapMeta = document.createElement("div");
@@ -212,7 +201,13 @@
     </script>
 
 </head>
-<div id="welcome-message" class="welcome text-center circular-black" style="font-size: 60px; color: #1ED860"></div>
+<a href="{% url 'home' %}">
+    <article class="button">
+        <span>< Home</span>
+    </article>
+</a>
+
+<div id="welcome-message" class="welcome text-center circular-black" style="color: #1ED860"></div>
 
 <div class="create-wrap-container">
     <a href="/generateWrap?accessToken={{ accessToken|default:"" }}" class="create-wrap-button">Create Wrap</a>

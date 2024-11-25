@@ -8,92 +8,121 @@
 
     <!-- Tailwind CSS from CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="{% static 'dist/theme/dracula.css' %}" rel="stylesheet">
 
     <title>Spotify Roasted</title>
 
     <style>
-        .johnny-torch {
-            font-family: "Johnny Torch", system-ui;
-            font-weight: 400;
-            font-style: normal;
-        }
-        .circular-black {
-            font-family: "Circular Spotify Text Black", system-ui;
-            font-weight: 700;
-            font-style: normal;
-        }
-        .signin {
-            content: "";
-            display: block;
-            width: 40%;
-            color: #1ED860;
-        }
-
         body {
-            /* Uncomment this line if you want to use a background image */
-            /*background-image: url("{% static 'images/spotifybackground.png' %}");*/
-            background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%, #ff8c00);
-            color: white; /* Ensures text is visible on the dark background */
+            background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%);
+            color: white;
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: 100%;
-            background-color: #0a0a0a;
+            background-size: cover;
+            margin: 0;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .johnny-torch {
+            font-family: 'Rubik Beastly', sans-serif;
         }
 
         .bg-spotify-green {
             background-color: #1DB954;
         }
-        .hover\:bg-spotify-green-dark:hover {
-            background-color: #1AA84B;
-        }
 
         .header {
             position: absolute;
-            top: 10px;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
         }
+
         .names {
             display: flex;
-            justify-content: space-between;  /* Evenly distribute the items */
+            justify-content: center;
             align-items: center;
-            width: 90%;  /* Set the width to 90% of the screen */
             margin-top: 100px;
         }
+
+        .names h6 {
+            font-size: 4rem;
+            margin: 0 0.5rem;
+        }
+
         .name-container {
             text-align: center;
         }
+
         .image-container img {
-            width: 200px;  /* Set image width */
-            height: 200px;  /* Set image height to match width */
-            border-radius: 50%;  /* Make the image circular */
-            object-fit: cover;  /* Ensures the image fills the circle without distortion */
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
         }
-        .image-name-container {
-            margin-top: 10px;
+
+        .signin {
+            text-align: center;
+            background: #1DB954;
+            padding: 20px;
+            border-radius: 25px;
+            margin-top: 50px;
+            transition: background 0.3s ease;
         }
-        .email {
-            margin-top: 5px;  /* Space between name and email */
-            font-size: 14px;
-            color: #555;  /* Grey color for email */
+
+        .signin:hover {
+            background-color: #1AA84B;
+        }
+
+        .signin img {
+            width: 60%;
+            max-width: 200px;
         }
 
         .button {
             display: inline-block;
-            padding: 15px 30px; /* Button size */
-            background-color: #1DB954; /* Spotify green */
+            padding: 15px 30px;
+            background-color: #1DB954;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+            margin-top: 40px;
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            background-color: #1AA84B;
+        }
+
+        .website-name {
+            font-size: 75px;
+        }
+
+        .dev-button {
+            position: absolute; /* This will position the button relative to the nearest positioned ancestor (in this case, the body) */
+            top: 20px; /* Distance from the top of the screen */
+            right: 20px; /* Distance from the left of the screen */
+            padding: 10px 20px; /* Button size */
+            background-color: black; /* Spotify green */
             color: white;
             text-align: center;
             text-decoration: none; /* Remove underline */
             border-radius: 50px; /* Rounded edges */
             transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
         }
 
-        .button:hover {
+        .dev-button:hover {
             transform: scale(1.05); /* Slightly enlarge on hover */
             background-color: #1AA84B; /* Darker green on hover */
             cursor: pointer; /* Change cursor on hover */
@@ -103,34 +132,33 @@
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 </head>
 
-<body class="light">
+<body>
+    <!-- Contact Devs Button -->
+    <a href="/contact">
+        <article class="dev-button">
+            <span>Contact the Developers</span>
+        </article>
+    </a>
 
-    <main class="text-center">
-       <nav>
-          <h6 class="circular-black" style="font-size: 100px; color: #1ED860">Spotify</h6>
-          <h6 class="johnny-torch" style="font-size: 100px; color: orangered">Roasted</h6>
-        </nav>
-        <div class="justify-items-center">
-            <a href="/oauth" style="display: block; text-decoration: none;">
-                <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-400 p-4 border-4 justify-items-center">
-                    <div class="signin" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 500px; height: 200px; text-align: center;">
-                        <span style="font-size: 40px; color: #1DB954; font-weight: bold;">Log in with</span>
-                        <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" style="width: 95%; height: 80%;">
-                    </div>
-                </article>
+    <main class="flex flex-col items-center justify-center h-screen space-y-12">
+        <!-- Title -->
+        <div class="header website-name text-center">
+            <h1 class="circular-black" style="color: #1ED860; font-size: 100px;">Spotify</h1>
+            <h1 class="johnny-torch" style="color: orangered; font-size: 100px;">Roasted</h1>
+        </div>
+
+
+        <!-- Sign-in Button -->
+        <div class="signin text-center">
+            <span style="font-size: 40px; color: #fff; font-weight: bold;">Log in with</span>
+            <a href="/oauth">
+                <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" class="mt-4">
             </a>
         </div>
+
+        <!-- Contact Button -->
+
     </main>
-    <div class="justify-items-center p-24">
-        <a href="/contact" style="display: block; text-decoration:none;">
-            <article class="button">
-                <span style="font-size: 24px; color: #ffffff; font-weight: bold; font-family: 'Bebas Neue', sans-serif;"> Contact the Developers</span>
-            </article>
-        </a>
-    </div>
-
-    <!-- Developer Information -->
-
 
 </body>
 
