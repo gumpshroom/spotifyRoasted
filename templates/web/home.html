@@ -68,42 +68,30 @@
         }
 
         .signin {
-            text-align: center;
+            display: flex; /* Use flexbox for layout */
+            justify-content: center; /* Center contents horizontally */
+            align-items: center; /* Align contents vertically */
             background: #1DB954;
-            padding: 20px;
-            border-radius: 25px;
-            margin-top: 50px;
+            border: 5px solid #1DB954;
+            {#border: 5px solid #1DB954;#}
+            padding: 20px; /* Add padding around the button */
+            border-radius: 50px; /* Rounded corners */
+            margin-top: 50px !important; /* Spacing from other elements */
             transition: background 0.3s ease;
         }
 
         .signin:hover {
-            background-color: #1AA84B;
+            background-color: black;
+            border: 5px solid #1DB954;
         }
 
         .signin img {
-            width: 60%;
+            width: 80%;
             max-width: 200px;
         }
 
-        .button {
-            display: inline-block;
-            padding: 15px 30px;
-            background-color: #1DB954;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: transform 0.2s, background-color 0.2s;
-            font-family: 'Bebas Neue', sans-serif;
-            margin-top: 40px;
-        }
-
-        .button:hover {
-            transform: scale(1.05);
-            background-color: #1AA84B;
-        }
-
         .website-name {
+            margin-top: 100px;
             font-size: 75px;
         }
 
@@ -112,7 +100,7 @@
             top: 20px; /* Distance from the top of the screen */
             right: 20px; /* Distance from the left of the screen */
             padding: 10px 20px; /* Button size */
-            background-color: black; /* Spotify green */
+            background-color: #1DB954; /* Spotify green */
             color: white;
             text-align: center;
             text-decoration: none; /* Remove underline */
@@ -127,9 +115,33 @@
             background-color: #1AA84B; /* Darker green on hover */
             cursor: pointer; /* Change cursor on hover */
         }
-    </style>
 
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+        .spotify-logo {
+            width: 50px; /* Define explicit width to avoid scaling issues */
+            height: 50px; /* Keep it square for consistency */
+            object-fit: contain; /* Ensure the image is not stretched or cropped */
+            margin-left: 10px; /* Add spacing between text and image */
+            display: block; /* Ensures the image is treated as a block element */
+            margin-left: auto; /* Center horizontally within flex container */
+            margin-right: auto; /* Center horizontally within flex container */
+            filter: brightness(0) invert(1); /* Makes the image completely white */
+        }
+
+        .signin:hover .spotify-logo {
+            filter: brightness(1);
+            transition: filter 0.3s ease; /* Smooth transition for the effect */
+        }
+
+        .signin-text {
+            font-size: 40px;
+            color: white;
+        }
+
+        .signin:hover .signin-text {
+            color: #1DB954; /* Change text color to green on hover */
+            transition: color 0.3s ease; /* Smooth transition for text color change */
+        }
+    </style>
 </head>
 
 <body>
@@ -142,22 +154,20 @@
 
     <main class="flex flex-col items-center justify-center h-screen space-y-12">
         <!-- Title -->
-        <div class="header website-name text-center">
-            <h1 class="circular-black" style="color: #1ED860; font-size: 100px;">Spotify</h1>
-            <h1 class="johnny-torch" style="color: orangered; font-size: 100px;">Roasted</h1>
+        <div class="header website-name text-center flex justify-center items-center space-x-4">
+            <h1 class="circular-black" style="color: #1ED860; font-size: 200px;">Spotify</h1>
+            <h1 class="johnny-torch" style="color: orangered; font-size: 200px;">Roasted</h1>
         </div>
-
 
         <!-- Sign-in Button -->
-        <div class="signin text-center">
-            <span style="font-size: 40px; color: #fff; font-weight: bold;">Log in with</span>
-            <a href="/oauth">
-                <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" class="mt-4">
-            </a>
-        </div>
-
-        <!-- Contact Button -->
-
+        <a href="/oauth">
+            <div class="signin flex flex-col text-center items-center justify-center">
+                <span href="/oauth" class="signin-text">
+                    Log In with
+                    <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" class="spotify-logo">
+                </span>
+            </div>
+        </a>
     </main>
 
 </body>
