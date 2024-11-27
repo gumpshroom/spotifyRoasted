@@ -10,4 +10,6 @@ urlpatterns = [
     path("generateWrap", views.generateWrap, name="generateWrap"),
     path("getWrap", views.getWrap, name="getWrap"),
     path("contact", views.contact, name="contact"),
+    path('deleteWrap', views.deleteWrap, name='deleteWrap'),
+
 ]

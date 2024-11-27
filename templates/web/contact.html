@@ -5,122 +5,174 @@
 <head>
     <meta charset="UTF-8">
     <title>Contact the Developer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="{% static 'dist/theme/dracula.css' %}" rel="stylesheet">
+
     <style>
         body {
+            background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%, #ff8c00);
+            color: white;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-color: #0a0a0a;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: var(--r-main-font);
+        }
+        .dark-mode {
+            background: linear-gradient(to bottom, #ff8c00 60%, #000000 100%) !important;
+            color: black !important;
         }
         .header {
             position: absolute;
             top: 10px;
             text-align: center;
+            width: 100%;
         }
-        .home-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-        }
-        .names {
+        .info-container {
             display: flex;
-            justify-content: space-between;  /* Evenly distribute the items */
-            align-items: center;
-            width: 90%;  /* Set the width to 90% of the screen */
-            margin-top: 100px;
+            flex-wrap: wrap;
+            justify-content: center; /* Align items to the center */
+            width: 100%;
+            margin-top: 120px;
+            gap: 100px; /* Adjust the gap between the developer containers */
+        }
+        .image-container {
+            display: flex; /* Turn the container into a flexbox */
+            justify-content: center; /* Center horizontally */
+            width: 100%; /* Ensure the container takes up full width */
+        }
+        .image-container img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         .name-container {
             text-align: center;
         }
-        .image-container img {
-            width: 200px;  /* Set image width */
-            height: 200px;  /* Set image height to match width */
-            border-radius: 50%;  /* Make the image circular */
-            object-fit: cover;  /* Ensures the image fills the circle without distortion */
-        }
-        .image-name-container {
-            margin-top: 10px;
-        }
         .email {
-            margin-top: 5px;  /* Space between name and email */
-            font-size: 14px;
-            color: #555;  /* Grey color for email */
+            margin-top: 5px;
+            font-style: italic;
+            font-size: 15px;
+            color: #D17300;
         }
+
+        /* Title Styling */
+        .page-title {
+            font-size: 60px;
+            color: #D17300;
+            text-align: center;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        /* Developer container styling */
+        .developer-container {
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            position: absolute; /* This will position the button relative to the nearest positioned ancestor (in this case, the body) */
+            top: 20px; /* Distance from the top of the screen */
+            left: 20px; /* Distance from the left of the screen */
+            padding: 10px 20px; /* Button size */
+            background-color: black; /* Spotify green */
+            color: white;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #1AA84B; /* Darker green on hover */
+            cursor: pointer; /* Change cursor on hover */
+            color: black;
+        }
+
+        .name-text {
+            font-weight: bold;
+            font-size: 30px;
+            color: #D17300;
+        }
+
+        /* Dark Mode Styles */
+
+        .dark-mode .back-button {
+            background-color: #ff8c00;
+            color: black;
+        }
+
+        .dark-mode .back-button:hover {
+            background-color: #1DB954;
+        }
+
+        .dark-mode .page-title {
+            color: black;
+        }
+
+        .dark-mode .name-text {
+            color: black;
+        }
+
+        .dark-mode .email {
+            color: black;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Home Page Button -->
-    <div class="home-button">
-        <a href="{% url 'home' %}">
-            <button>Home Page</button>
-        </a>
-    </div>
+    <!-- Back Button -->
+    <a href="{% url 'home' %}">
+        <article class="back-button">
+            <span>< Home</span>
+        </article>
+    </a>
 
-    <!-- Header -->
-    <div class="header">
-        <h2>Contact the Developer Team</h2>
+    <!-- Title -->
+    <div class="page-title">
+        <h1>Contact the Developer Team</h1>
     </div>
 
     <!-- Developer Information -->
-    <div class="names">
-        <!-- Aaron Luu -->
-        <div class="image-name-container">
+    <div class="info-container">
+        {% for developer in developers %}
+        <div class="developer-container">
             <div class="image-container">
-                <img src="{% static 'images/AaronLuu.PNG' %}" alt="Aaron Luu">
+                <img src="{% static developer.image %}" alt="{{ developer.name }}">
             </div>
             <div class="name-container">
-                <p>Aaron Luu</p>
-                <p class="email">aluu31@gatech.edu</p> <!-- Email Address -->
+                <p class="name-text">{{ developer.name }}</p>
+                <p class="email">{{ developer.email }}</p>
             </div>
         </div>
-
-        <!-- Patrick Del-rio -->
-        <div class="image-name-container">
-            <div class="image-container">
-                <img src="{% static 'images/PatrickDelRio.PNG' %}" alt="Patrick Del-rio">
-            </div>
-            <div class="name-container">
-                <p>Patrick Del-rio</p>
-                <p class="email">pdelrio@example.com</p> <!-- Email Address -->
-            </div>
-        </div>
-
-        <!-- Nathan Nguyen -->
-        <div class="image-name-container">
-            <div class="image-container">
-                <img src="{% static 'images/NathanNguyen.PNG' %}" alt="Nathan Nguyen">
-            </div>
-            <div class="name-container">
-                <p>Nathan Nguyen</p>
-                <p class="email">nathan@example.com</p> <!-- Email Address -->
-            </div>
-        </div>
-
-        <!-- Eric Yang -->
-        <div class="image-name-container">
-            <div class="image-container">
-                <img src="{% static 'images/EricYang.PNG' %}" alt="Eric Yang">
-            </div>
-            <div class="name-container">
-                <p>Eric Yang</p>
-                <p class="email">eric.yang@example.com</p> <!-- Email Address -->
-            </div>
-        </div>
-
-        <!-- Bao Nguyen -->
-        <div class="image-name-container">
-            <div class="image-container">
-                <img src="{% static 'images/BaoNguyen.PNG' %}" alt="Bao Nguyen">
-            </div>
-            <div class="name-container">
-                <p>Bao Nguyen</p>
-                <p class="email">bnguyen324@gatech.edu</p> <!-- Email Address -->
-            </div>
-        </div>
+        {% endfor %}
     </div>
 
+    <div class="justify-items-center p-8">
+        <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-200 p-4 border-4 text-center max-w-4xl" style="display: block; text-decoration: none;">
+            <span class="body-text" style="font-family: var(--r-main-font); font-size: 20px; font-style: italic; color: #D17300">
+                Spotify Roasted is a project designed to make a customized "Spotify Wrap" that analyzes your Spotify activity
+                and pokes a little fun at your music tastes. You can generate new wraps whenever you want and they are all
+                stored if you want to go back to previous wraps. If you want to share your warps we have links to share to
+                FaceBook and LinkedIn!
+            </span>
+        </article>
+    </div>
+
+<script src="{% static 'js/darkMode.js' %}"></script>
 </body>
 </html>

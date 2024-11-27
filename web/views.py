@@ -1,13 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from groq import Groq
 from web.models import User
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 import json
 import requests
 import base64
+from django.http import JsonResponse
 
-APP_URL = 'http://localhost:8000'
+
+load_dotenv()
+APP_URL = os.getenv('APP_URL')
 
 data = json.load(open('auth.json'))
 GROQ_KEY = data['groq']
@@ -47,14 +52,18 @@ def oauthCallback(request):
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': 'Basic ' + base64.b64encode((SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET).encode('ascii')).decode('ascii')
         })
-        print(response.content)
+
         if response.status_code == 200:
             url = 'https://api.spotify.com/v1/me'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + response.json()['access_token']})
-            print(res.content)
+
             if res.status_code == 200:
                 try:
                     user = User.objects.get(spotify_id=res.json()['id'])
+                    print('this my user!!!')
+                    print(user.access_token)
+                    print(user.wraps)
+                    print(user.spotify_id)
                     user.access_token = response.json()['access_token']
                     user.save()
                     return render(request, 'web/roasted.html', {'accessToken': response.json()['access_token'], 'welcomeBack': 'true'})
@@ -196,4 +205,43 @@ def getWrap(request):
 
 
 def contact(request):
-    return render(request, "web/contact.html")
+    developers = [
+        {"name": "Aaron Luu", "email": "aluu31@gatech.edu", "image": "images/AaronLuu.PNG"},
+        {"name": "Patrick Del Rio", "email": "prio3@gatech.edu", "image": "images/PatrickDelRio.PNG"},
+        {"name": "Nathan Nguyen", "email": "nathan@example.com", "image": "images/NathanNguyen.PNG"},
+        {"name": "Eric Yang", "email": "eric.yang@example.com", "image": "images/EricYang.PNG"},
+        {"name": "Bao Nguyen", "email": "bnguyen324@gatech.edu", "image": "images/BaoNguyen.PNG"}
+    ]
+    return render(request, "web/contact.html", {'developers': developers})
+
+
+def deleteWrap(request):
+    if request.method == 'DELETE' and request.GET.get('accessToken') and request.GET.get('wrapId'):
+        try:
+            user = User.objects.get(access_token=request.GET.get('accessToken'))
+            wrap_id = request.GET.get('wrapId')
+
+            # Ensure the wraps dictionary is not empty
+            if user.wraps:
+                wraps = user.wraps
+
+                # Check if the wrap ID exists
+                if wrap_id in wraps:
+                    # Remove the wrap
+                    del wraps[wrap_id]
+
+                    # Reindex the wraps (convert keys to strings and reorder numerically)
+                    wraps = {str(i): wrap for i, wrap in enumerate(wraps.values())}
+                    user.wraps = wraps
+                    user.save()
+
+                    return JsonResponse({"message": "Wrap deleted successfully."}, status=200)
+                else:
+                    return JsonResponse({"error": "Wrap ID not found."}, status=404)
+            else:
+                return JsonResponse({"error": "No wraps to delete."}, status=404)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "User not found."}, status=404)
+    else:
+        return JsonResponse({"error": "Invalid request."}, status=400)
+

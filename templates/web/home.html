@@ -8,162 +8,259 @@
 
     <!-- Tailwind CSS from CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="{% static 'dist/theme/dracula.css' %}" rel="stylesheet">
 
     <title>Spotify Roasted</title>
 
     <style>
-        .johnny-torch {
-            font-family: "Johnny Torch", system-ui;
-            font-weight: 400;
-            font-style: normal;
-        }
-        .circular-black {
-            font-family: "Circular Spotify Text Black", system-ui;
-            font-weight: 700;
-            font-style: normal;
-        }
-        .signin {
-            content: "";
-            display: block;
-            width: 40%;
-            color: #1ED860;
-        }
-
         body {
-            /* Uncomment this line if you want to use a background image */
-            /*background-image: url("{% static 'images/spotifybackground.png' %}");*/
-            background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%, #ff8c00);
-            color: white; /* Ensures text is visible on the dark background */
+            background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%);
+            color: white;
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: 100%;
-            background-color: #0a0a0a;
+            background-size: cover;
+            margin: 0;
+            font-family: 'Bebas Neue', sans-serif;
+            transition: all 0.3s ease; /* Smooth transition for color changes */
+        }
+
+        .dark-mode {
+            background: linear-gradient(to bottom, #ff8c00 60%, #000000 100%) !important;
+            color: black !important;
+        }
+
+        .johnny-torch {
+            font-family: 'Rubik Beastly', sans-serif;
         }
 
         .bg-spotify-green {
             background-color: #1DB954;
         }
-        .hover\:bg-spotify-green-dark:hover {
-            background-color: #1AA84B;
-        }
 
         .header {
             position: absolute;
-            top: 10px;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
         }
+
         .names {
             display: flex;
-            justify-content: space-between;  /* Evenly distribute the items */
+            justify-content: center;
             align-items: center;
-            width: 90%;  /* Set the width to 90% of the screen */
             margin-top: 100px;
         }
+
+        .names h6 {
+            font-size: 4rem;
+            margin: 0 0.5rem;
+        }
+
         .name-container {
             text-align: center;
         }
-        .image-container img {
-            width: 200px;  /* Set image width */
-            height: 200px;  /* Set image height to match width */
-            border-radius: 50%;  /* Make the image circular */
-            object-fit: cover;  /* Ensures the image fills the circle without distortion */
-        }
-        .image-name-container {
-            margin-top: 10px;
-        }
-        .email {
-            margin-top: 5px;  /* Space between name and email */
-            font-size: 14px;
-            color: #555;  /* Grey color for email */
-        }
-    </style>
 
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+        .image-container img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .signin {
+            display: flex; /* Use flexbox for layout */
+            justify-content: center; /* Center contents horizontally */
+            align-items: center; /* Align contents vertically */
+            background: #1DB954;
+            border: 5px solid #1DB954;
+            padding: 20px; /* Add padding around the button */
+            border-radius: 50px; /* Rounded corners */
+            margin-top: 50px !important; /* Spacing from other elements */
+            transition: background 0.3s ease;
+        }
+
+        .signin:hover {
+            background-color: black;
+            border: 5px solid #1DB954;
+        }
+
+        .signin img {
+            width: 80%;
+            max-width: 200px;
+        }
+
+        .website-name {
+            margin-top: 100px;
+            font-size: 75px;
+        }
+
+        .dev-button {
+            position: absolute; /* This will position the button relative to the nearest positioned ancestor (in this case, the body) */
+            top: 20px; /* Distance from the top of the screen */
+            right: 20px; /* Distance from the left of the screen */
+            padding: 10px 20px; /* Button size */
+            background-color: #1DB954; /* Spotify green */
+            color: white;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+        }
+
+        .dev-button:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #1AA84B; /* Darker green on hover */
+            cursor: pointer; /* Change cursor on hover */
+        }
+
+        .spotify-logo {
+            width: 50px; /* Define explicit width to avoid scaling issues */
+            height: 50px; /* Keep it square for consistency */
+            object-fit: contain; /* Ensure the image is not stretched or cropped */
+            margin-left: 10px; /* Add spacing between text and image */
+            display: block; /* Ensures the image is treated as a block element */
+            margin-left: auto; /* Center horizontally within flex container */
+            margin-right: auto; /* Center horizontally within flex container */
+            filter: brightness(0) invert(1); /* Makes the image completely white */
+        }
+
+        .signin:hover .spotify-logo {
+            filter: brightness(1);
+            transition: filter 0.3s ease; /* Smooth transition for the effect */
+        }
+
+        .signin-text {
+            font-size: 40px;
+            color: white;
+        }
+
+        .signin:hover .signin-text {
+            color: #1DB954; /* Change text color to green on hover */
+            transition: color 0.3s ease; /* Smooth transition for text color change */
+        }
+
+        .dark-button {
+            position: absolute; /* This will position the button relative to the nearest positioned ancestor (in this case, the body) */
+            top: 20px; /* Distance from the top of the screen */
+            left: 20px; /* Distance from the left of the screen */
+            padding: 10px 20px; /* Button size */
+            background-color: #1DB954; /* Spotify green */
+            color: white;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+        }
+
+        .dark-button:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #1AA84B; /* Darker green on hover */
+            cursor: pointer; /* Change cursor on hover */
+        }
+
+        /* Dark mode styles */
+        .dark-mode .signin {
+            background: #000000;
+            border: 5px solid #000000;
+        }
+
+        .dark-mode .signin:hover {
+            background-color: #1DB954;
+            border: 5px solid #000000;
+        }
+
+        .dark-mode .signin-text {
+            font-size: 40px;
+            color: #1DB954;
+        }
+
+        .dark-mode .signin:hover .signin-text {
+            color: #000000; /* Change text color to green on hover */
+            transition: color 0.3s ease; /* Smooth transition for text color change */
+        }
+
+        .dark-mode .spotify-logo {
+            filter: brightness(1);
+        }
+
+        .dark-mode .signin:hover .spotify-logo {
+            {#transition: filter 0.3s ease; /* Smooth transition for the effect */#}
+            filter: brightness(0); /* Makes the image completely white */
+        }
+
+        .dark-mode .website-name {
+            color: #1DB954;
+            -webkit-text-stroke: 5px black;
+            {#text-shadow: 2px 2px 0px black;#}
+            {#background-color: black;#}
+            {#padding: 0 110px; /* Button size */#}
+            {#border-radius: 50px;#}
+        }
+
+        .dark-mode .dark-button {
+            background-color: #000000;
+            color: #1DB954;
+        }
+
+        .dark-mode .dark-button:hover {
+            background-color: #000000;
+        }
+
+        .dark-mode .dev-button {
+            background-color: #000000;
+            color: #1DB954;
+        }
+
+        .dark-mode .dev-button:hover {
+            background-color: #000000;
+        }
+
+
+    </style>
 </head>
 
-<body class="light">
+<body>
+    <!-- Dark Mode Toggle Button -->
+    <button onclick="toggleDarkMode()" class="dark-button">
+        Toggle Theme
+    </button>
 
-    <main class="text-center">
-       <nav>
-          <h6 class="circular-black" style="font-size: 100px; color: #1ED860">Spotify</h6>
-          <h6 class="johnny-torch" style="font-size: 100px; color: orangered">Roasted</h6>
-        </nav>
-        <div class="justify-items-center">
-            <a href="/oauth" style="display: block; text-decoration: none;">
-                <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-400 p-4 border-4 justify-items-center">
-                    <div class="signin" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 500px; height: 200px; text-align: center;">
-                        <span style="font-size: 40px; color: #1DB954; font-weight: bold;">Log in with</span>
-                        <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" style="width: 95%; height: 80%;">
-                    </div>
-                </article>
-            </a>
+    <!-- Contact Devs Button -->
+    <a href="/contact">
+        <article class="dev-button">
+            <span>Contact the Developers</span>
+        </article>
+    </a>
+
+    <main class="flex flex-col items-center justify-center h-screen space-y-12">
+        <!-- Title -->
+        <div class="header website-name text-center flex justify-center items-center space-x-4">
+            <h1 class="circular-black" style="color: #1ED860; font-size: 200px;">Spotify</h1>
+            <h1 class="johnny-torch" style="color: orangered; font-size: 200px;">Roasted</h1>
         </div>
+
+        <!-- Sign-in Button -->
+        <a href="/oauth">
+            <div class="signin flex flex-col text-center items-center justify-center">
+                <span href="/oauth" class="signin-text">
+                    Log In with
+                    <img src="{% static 'images/SpotifyLogo.png' %}" alt="Spotify Logo" class="spotify-logo">
+                </span>
+            </div>
+        </a>
     </main>
-    
 
-    <!-- Developer Information -->
-    <div class="names" style="display: flex; align-items: center; justify-content: center; gap: 150px; width: 100%; font-family: 'Circular Spotify Text Black'; font-weight: initial" >
-        <!-- Aaron Luu -->
-        <div class="image-name-container">
-            <div class="image-container">
-                <img src="{% static 'images/AaronLuu.PNG' %}" alt="Aaron Luu">
-            </div>
-            <div class="name-container">
-                <p>Aaron Luu</p>
-                <p class="email">aluu31@gatech.edu</p> <!-- Email Address -->
-            </div>
-        </div>
-
-        <!-- Patrick Del-rio -->
-        <div class="image-name-container">
-            <div class="image-container">
-                <img src="{% static 'images/PatrickDelRio.PNG' %}" alt="Patrick Del-rio">
-            </div>
-            <div class="name-container">
-                <p>Patrick Del-rio</p>
-                <p class="email">prio3@gatech.edu</p> <!-- Email Address -->
-            </div>
-        </div>
-
-        <!-- Nathan Nguyen -->
-        <div class="image-name-container">
-            <div class="image-container">
-                <img src="{% static 'images/NathanNguyen.PNG' %}" alt="Nathan Nguyen">
-            </div>
-            <div class="name-container">
-                <p>Nathan Nguyen</p>
-                <p class="email">nnguyen402@gatech.edu</p> <!-- Email Address -->
-            </div>
-        </div>
-
-        <!-- Eric Yang -->
-        <div class="image-name-container">
-            <div class="image-container">
-                <img src="{% static 'images/EricYang.PNG' %}" alt="Eric Yang">
-            </div>
-            <div class="name-container">
-                <p>Eric Yang</p>
-                <p class="email">eric.yang@example.com</p> <!-- Email Address -->
-            </div>
-        </div>
-
-        <!-- Bao Nguyen -->
-        <div class="image-name-container">
-            <div class="image-container">
-                <img src="{% static 'images/BaoNguyen.PNG' %}" alt="Bao Nguyen">
-            </div>
-            <div class="name-container">
-                <p>Bao Nguyen</p>
-                <p class="email">bnguyen324@gatech.edu</p> <!-- Email Address -->
-            </div>
-        </div>
-    </div>
-
+    <script src="{% static 'js/darkMode.js' %}"></script>
 </body>
 
 </html>

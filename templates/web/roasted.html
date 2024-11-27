@@ -1,43 +1,310 @@
 {% load static %}
-<html>
+<html lang="en">
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="{% static 'dist/theme/dracula.css' %}" rel="stylesheet">
+
+
+    <style>
+        .circular-black {
+            font-family: "Circular Spotify Text Black", system-ui;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        body {
+            /* Uncomment this line if you want to use a background image */
+            /*background-image: url("{% static 'images/spotifybackground.png' %}");*/
+            background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%, #ff8c00);
+            color: white; /* Ensures text is visible on the dark background */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-color: #0a0a0a;
+        }
+        .dark-mode {
+            background: linear-gradient(to bottom, #ff8c00 60%, #000000 100%) !important;
+            color: black !important;
+        }
+
+        .bg-spotify-green {
+            background-color: #1DB954;
+        }
+        .hover\:bg-spotify-green-dark:hover {
+            background-color: #1AA84B;
+        }
+
+        .wrap-container {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally */
+            width: 100%; /* Ensure it spans full screen width */
+        }
+
+        .wrap-box {
+            width: 90%; /* Take 90% of the screen width */
+            max-width: 800px; /* Limit the maximum width */
+            margin: 10px 0; /* Add space between wraps */
+            padding: 30px; /* Internal padding */
+            background-color: rgba(29, 185, 84, 0.9); /* Spotify green */
+            color: white;
+            border-radius: 50px; /* Rounded corners */
+            text-decoration: none; /* Remove underline for links */
+            transition: background-color 0.2s, transform 0.2s;
+            font-family: var(--r-main-font);
+        }
+
+        .wrap-box:hover {
+            background-color: #1AA84B; /* Darker green on hover */
+            transform: scale(1.02); /* Slightly enlarge on hover */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+
+        .wrap-title {
+            font-size: 28px; /* Large title font size */
+            margin-bottom: 8px; /* Space below the title */
+            font-weight: bold;
+            color: white;
+        }
+
+        .wrap-meta {
+            font-size: 20px; /* Smaller text for metadata */
+            color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+            font-style: italic;
+            color: white;
+        }
+
+        .create-wrap-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            margin-bottom: 10px; /* Add space between the wraps and the button */
+        }
+
+        .create-wrap-button {
+            display: inline-block;
+            padding: 15px 30px; /* Button size */
+            background-color: #1DB954; /* Spotify green */
+            color: white;
+            font-size: 28px;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .create-wrap-button:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #1AA84B; /* Darker green on hover */
+            cursor: pointer; /* Change cursor on hover */
+        }
+
+        .welcome {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 75px;
+            margin-top: 75px;
+        }
+
+        .back-button {
+            position: absolute; /* This will position the button relative to the nearest positioned ancestor (in this case, the body) */
+            top: 20px; /* Distance from the top of the screen */
+            left: 20px; /* Distance from the left of the screen */
+            padding: 10px 20px; /* Button size */
+            background-color: black; /* Spotify green */
+            color: white;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #1AA84B; /* Darker green on hover */
+            cursor: pointer; /* Change cursor on hover */
+            color: black;
+        }
+
+        /* Dark Mode Styles */
+
+        .dark-mode .back-button {
+            background-color: #ff8c00;
+            color: black;
+        }
+
+        .dark-mode .back-button:hover {
+            background-color: #1DB954;
+        }
+
+        .dark-mode .wrap-box {
+            background-color: black; /* Spotify green */
+            color: #1DB954;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .dark-mode .wrap-box:hover {
+            background-color: #222222; /* Darker green on hover */
+        }
+
+        .dark-mode .wrap-title {
+            color: #1DB954;
+        }
+
+        .dark-mode .wrap-meta {
+            color: #1DB954;
+            font-style: italic;
+        }
+
+        .dark-mode .create-wrap-button {
+            background-color: black; /* Spotify green */
+            color: #1DB954;
+        }
+
+        .dark-mode .create-wrap-button:hover {
+            background-color: #222222; /* Darker green on hover */
+        }
+
+        .dark-mode .welcome {
+            color: #1DB954;
+            -webkit-text-stroke: 1px black;
+        }
+    </style>
+
     <meta charset="UTF-8">
     <title>Spotify Roasted</title>
     <script>
         var welcome = {{ welcomeBack|default:"false" }};
-        if (welcome) {
-            alert("Welcome back!")
-        } else {
-            alert("Welcome! Create a wrap to get started")
-        }
+        {#if (welcome) {#}
+        {#    alert("Welcome back!")#}
+        {#} else {#}
+        {#    alert("Welcome! Create a wrap to get started")#}
+        {#}#}
         //store token for login session
-        if (!localStorage.spotifyAccessToken)
-            localStorage.spotifyAccessToken = "{{ accessToken|default:"" }}";
-        fetch("/getWraps?accessToken=" + localStorage.spotifyAccessToken).then(data => data.json()).then(data => {
-    console.log(data)
+        localStorage.spotifyAccessToken = "{{ accessToken|default:"" }}";
 
-    if (Object.keys(data).length === 0 || data.error) {
-        document.getElementById("wraps").innerHTML = "No wraps found. Create a wrap to get started!";
-    } else {
-        var wraps = JSON.parse(data).wrapNames
-        for (var i = 0; i < wraps.length; i++) {
-            var wrapItem = document.createElement("a");
-            wrapItem.innerHTML = wraps[i];
-            wrapItem.href = "/getWrap?accessToken={{ accessToken|default:"" }}&wrapId=" + i;
-            document.getElementById("wraps").appendChild(wrapItem);
-            document.getElementById("wraps").appendChild(document.createElement("br"));
-        }
-    }
+        fetch("https://api.spotify.com/v1/me", {
+            headers: {
+                Authorization: `Bearer ${localStorage.spotifyAccessToken}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                const username = data.display_name || "User"; // Default to "User" if display_name is missing
+                document.getElementById("welcome-message").innerText = `Welcome, ${username}!`;
+            })
+            .catch(error => {
+                console.error("Error fetching Spotify username:", error);
+                document.getElementById("welcome-message").innerText = "Welcome!";
+            });
+
+        fetch("/getWraps?accessToken=" + localStorage.spotifyAccessToken)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+
+        const wrapsContainer = document.getElementById("wraps");
+
+        if (Object.keys(data).length === 0 || data.error) {
+            wrapsContainer.innerHTML = "No wraps found. Create a wrap to get started!";
+        } else {
+            const wraps = JSON.parse(data).wrapNames;
+
+            wraps.forEach((wrapName, index) => {
+                // Create the wrap box container
+                const wrapBox = document.createElement("div");
+                wrapBox.className = "wrap-box flex justify-between items-center bg-spotify-green hover:bg-spotify-green-dark py-2 px-4 rounded-2xl mb-4";
+
+                // Wrap link
+                const wrapLink = document.createElement("a");
+                wrapLink.href = `/getWrap?accessToken=${localStorage.spotifyAccessToken}&wrapId=${index}`;
+                wrapLink.className = "flex-1";
+
+                const match = wrapName.match(/from (.+?) at (.+)$/);
+                if (match) {
+                    const formattedDate = match[1]; // e.g., "November 24, 2024"
+                    const formattedTime = match[2]; // e.g., "02:00 PM"
+
+                    const wrapTitle = document.createElement("div");
+                    wrapTitle.className = "wrap-title text-xl";
+                    wrapTitle.innerText = `Wrap #${index + 1}`;
+
+                    const wrapMeta = document.createElement("div");
+                    wrapMeta.className = "wrap-meta text-sm";
+                    wrapMeta.innerText = `Roasted on ${formattedDate} at ${formattedTime}`;
+
+                    wrapLink.appendChild(wrapTitle);
+                    wrapLink.appendChild(wrapMeta);
+                } else {
+                    console.log(`Invalid wrap name format for wrap #${index + 1}`);
+                }
+
+                // Delete button
+                const deleteButton = document.createElement("button");
+                deleteButton.className = "bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded";
+                deleteButton.innerText = "Delete";
+                deleteButton.onclick = () => {
+                    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+fetch(`/deleteWrap?accessToken=${localStorage.spotifyAccessToken}&wrapId=${index}`, {
+    method: "DELETE",
+    headers: {
+        "X-CSRFToken": csrfToken, // Include the CSRF token
+    },
 })
+    .then(response => {
+        if (response.ok) {
+            wrapsContainer.removeChild(wrapBox);
+            alert("Wrap deleted successfully.");
+        } else {
+            alert("Failed to delete wrap.");
+        }
+    })
+    .catch(error => {
+        console.error("Error deleting wrap:", error);
+        alert("An error occurred while deleting the wrap.");
+    });
+                };
+
+                // Append link and button to wrap box
+                wrapBox.appendChild(wrapLink);
+                wrapBox.appendChild(deleteButton);
+                wrapsContainer.appendChild(wrapBox);
+            });
+        }
+    });
+
     </script>
+    <script src="{% static 'js/darkMode.js' %}"></script>
 
 </head>
-<body>
-<div id="wraps">
+<a href="{% url 'home' %}">
+    <article class="back-button">
+        <span>< Home</span>
+    </article>
+</a>
 
+<div id="welcome-message" class="welcome text-center circular-black"></div>
+
+<div class="create-wrap-container">
+    <a href="/generateWrap?accessToken={{ accessToken|default:"" }}" class="create-wrap-button">Create Wrap</a>
 </div>
-<br>
-<a href="/generateWrap?accessToken={{ accessToken|default:"" }}">Create Wrap</a>
+
+<div class="wrap-container" id="wraps"></div>
+
 <script src="{% static 'js/roasted.js' %}"></script>
 </body>
 </html>
