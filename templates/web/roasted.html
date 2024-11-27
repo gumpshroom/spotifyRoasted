@@ -108,21 +108,22 @@
         .welcome {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 75px;
+            margin-top: 75px;
         }
 
         .button {
-            display: inline-block;
+            position: absolute; /* This will position the button relative to the nearest positioned ancestor (in this case, the body) */
+            top: 20px; /* Distance from the top of the screen */
+            left: 20px; /* Distance from the left of the screen */
             padding: 10px 20px; /* Button size */
-            background-color: black;
+            background-color: black; /* Spotify green */
             color: white;
-            font-size: 28px;
             text-align: center;
             text-decoration: none; /* Remove underline */
             border-radius: 50px; /* Rounded edges */
             transition: transform 0.2s, background-color 0.2s;
             font-family: 'Bebas Neue', sans-serif;
-            margin-top: 20px;
-            margin-left: 20px;
+            font-size: 28px;
         }
 
         .button:hover {
