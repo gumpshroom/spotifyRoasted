@@ -1,5 +1,6 @@
 {% load static %}
 <html lang="en">
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -159,46 +160,82 @@
                 document.getElementById("welcome-message").innerText = "Welcome!";
             });
 
-        fetch("/getWraps?accessToken=" + localStorage.spotifyAccessToken).then(response => response.json()).then(data => {
-            console.log(data);
+        fetch("/getWraps?accessToken=" + localStorage.spotifyAccessToken)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
 
-            const wrapsContainer = document.getElementById("wraps");
+        const wrapsContainer = document.getElementById("wraps");
 
-            if (Object.keys(data).length === 0 || data.error) {
-                wrapsContainer.innerHTML = "No wraps found. Create a wrap to get started!";
-            }
-            else {
-                const wraps = JSON.parse(data).wrapNames;
+        if (Object.keys(data).length === 0 || data.error) {
+            wrapsContainer.innerHTML = "No wraps found. Create a wrap to get started!";
+        } else {
+            const wraps = JSON.parse(data).wrapNames;
 
-                wraps.forEach((wrapName, index) => {
-                    // Create the wrap box
-                    const wrapBox = document.createElement("a");
-                    wrapBox.className = "wrap-box bg-spotify-green hover:bg-spotify-green-dark py-2 px-4 rounded-2xl text-white mb-4 block";
-                    wrapBox.href = `/getWrap?accessToken=${localStorage.spotifyAccessToken}&wrapId=${index}`;
+            wraps.forEach((wrapName, index) => {
+                // Create the wrap box container
+                const wrapBox = document.createElement("div");
+                wrapBox.className = "wrap-box flex justify-between items-center bg-spotify-green hover:bg-spotify-green-dark py-2 px-4 rounded-2xl text-white mb-4";
 
-                    const match = wrapName.match(/from (.+?) at (.+)$/);
-                    if (match) {
-                        const formattedDate = match[1]; // e.g., "November 24, 2024"
-                        const formattedTime = match[2]; // e.g., "02:00 PM"
+                // Wrap link
+                const wrapLink = document.createElement("a");
+                wrapLink.href = `/getWrap?accessToken=${localStorage.spotifyAccessToken}&wrapId=${index}`;
+                wrapLink.className = "flex-1";
 
-                        const wrapTitle = document.createElement("div");
-                        wrapTitle.className = "wrap-title text-xl";
-                        wrapTitle.innerText = `Wrap #${index + 1}`;
+                const match = wrapName.match(/from (.+?) at (.+)$/);
+                if (match) {
+                    const formattedDate = match[1]; // e.g., "November 24, 2024"
+                    const formattedTime = match[2]; // e.g., "02:00 PM"
 
-                        const wrapMeta = document.createElement("div");
-                        wrapMeta.className = "wrap-meta text-sm";
-                        wrapMeta.innerText = `Roasted on ${formattedDate} at ${formattedTime}`;
+                    const wrapTitle = document.createElement("div");
+                    wrapTitle.className = "wrap-title text-xl";
+                    wrapTitle.innerText = `Wrap #${index + 1}`;
 
-                        wrapBox.appendChild(wrapTitle);
-                        wrapBox.appendChild(wrapMeta);
-                        wrapsContainer.appendChild(wrapBox);
-                    }
-                    else {
-                        console.log(`Invalid wrap name format for wrap #${index + 1}`);
-                    }
-                });
-            }
-        })
+                    const wrapMeta = document.createElement("div");
+                    wrapMeta.className = "wrap-meta text-sm";
+                    wrapMeta.innerText = `Roasted on ${formattedDate} at ${formattedTime}`;
+
+                    wrapLink.appendChild(wrapTitle);
+                    wrapLink.appendChild(wrapMeta);
+                } else {
+                    console.log(`Invalid wrap name format for wrap #${index + 1}`);
+                }
+
+                // Delete button
+                const deleteButton = document.createElement("button");
+                deleteButton.className = "bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded";
+                deleteButton.innerText = "Delete";
+                deleteButton.onclick = () => {
+                    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+fetch(`/deleteWrap?accessToken=${localStorage.spotifyAccessToken}&wrapId=${index}`, {
+    method: "DELETE",
+    headers: {
+        "X-CSRFToken": csrfToken, // Include the CSRF token
+    },
+})
+    .then(response => {
+        if (response.ok) {
+            wrapsContainer.removeChild(wrapBox);
+            alert("Wrap deleted successfully.");
+        } else {
+            alert("Failed to delete wrap.");
+        }
+    })
+    .catch(error => {
+        console.error("Error deleting wrap:", error);
+        alert("An error occurred while deleting the wrap.");
+    });
+                };
+
+                // Append link and button to wrap box
+                wrapBox.appendChild(wrapLink);
+                wrapBox.appendChild(deleteButton);
+                wrapsContainer.appendChild(wrapBox);
+            });
+        }
+    });
+
     </script>
 
 </head>
