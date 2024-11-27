@@ -26,6 +26,12 @@
             background-size: cover;
             margin: 0;
             font-family: 'Bebas Neue', sans-serif;
+            transition: all 0.3s ease; /* Smooth transition for color changes */
+        }
+
+        .dark-mode {
+            background: linear-gradient(to bottom, #ff8c00 60%, #000000 100%) !important;
+            color: black !important;
         }
 
         .johnny-torch {
@@ -73,7 +79,6 @@
             align-items: center; /* Align contents vertically */
             background: #1DB954;
             border: 5px solid #1DB954;
-            {#border: 5px solid #1DB954;#}
             padding: 20px; /* Add padding around the button */
             border-radius: 50px; /* Rounded corners */
             margin-top: 50px !important; /* Spacing from other elements */
@@ -141,10 +146,90 @@
             color: #1DB954; /* Change text color to green on hover */
             transition: color 0.3s ease; /* Smooth transition for text color change */
         }
+
+        .dark-button {
+            position: absolute; /* This will position the button relative to the nearest positioned ancestor (in this case, the body) */
+            top: 20px; /* Distance from the top of the screen */
+            left: 20px; /* Distance from the left of the screen */
+            padding: 10px 20px; /* Button size */
+            background-color: #1DB954; /* Spotify green */
+            color: white;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+        }
+
+        .dark-button:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #1AA84B; /* Darker green on hover */
+            cursor: pointer; /* Change cursor on hover */
+        }
+
+        /* Dark mode styles */
+        .dark-mode .signin {
+            background: #000000;
+            border: 5px solid #000000;
+        }
+
+        .dark-mode .signin:hover {
+            background-color: #1DB954;
+            border: 5px solid #000000;
+        }
+
+        .dark-mode .signin-text {
+            font-size: 40px;
+            color: #1DB954;
+        }
+
+        .dark-mode .signin:hover .signin-text {
+            color: #000000; /* Change text color to green on hover */
+            transition: color 0.3s ease; /* Smooth transition for text color change */
+        }
+
+        .dark-mode .spotify-logo {
+            filter: brightness(1);
+        }
+
+        .dark-mode .signin:hover .spotify-logo {
+            {#transition: filter 0.3s ease; /* Smooth transition for the effect */#}
+            filter: brightness(0); /* Makes the image completely white */
+        }
+
+        .dark-mode .website-name {
+            color: #1DB954;
+        }
+
+        .dark-mode .dark-button {
+            background-color: #000000;
+            color: #1DB954;
+        }
+
+        .dark-mode .dark-button:hover {
+            background-color: #000000;
+        }
+
+        .dark-mode .dev-button {
+            background-color: #000000;
+            color: #1DB954;
+        }
+
+        .dark-mode .dev-button:hover {
+            background-color: #000000;
+        }
+
+
     </style>
 </head>
 
 <body>
+    <!-- Dark Mode Toggle Button -->
+    <button onclick="toggleDarkMode()" class="dark-button">
+        Toggle Dark Mode
+    </button>
+
     <!-- Contact Devs Button -->
     <a href="/contact">
         <article class="dev-button">
@@ -170,6 +255,7 @@
         </a>
     </main>
 
+    <script src="{% static 'js/darkMode.js' %}"></script>
 </body>
 
 </html>

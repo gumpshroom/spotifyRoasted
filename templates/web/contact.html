@@ -29,6 +29,10 @@
             margin: 0;
             font-family: var(--r-main-font);
         }
+        .dark-mode {
+            background: linear-gradient(to bottom, #ff8c00 60%, #000000 100%) !important;
+            color: black !important;
+        }
         .header {
             position: absolute;
             top: 10px;
@@ -59,23 +63,9 @@
         }
         .email {
             margin-top: 5px;
-            font-size: 14px;
-            color: #555;
-        }
-        .button {
-            display: inline-block;
-            padding: 15px 30px;
-            background-color: #1DB954;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-        .button:hover {
-            transform: scale(1.05);
-            background-color: #1AA84B;
-            cursor: pointer;
+            font-style: italic;
+            font-size: 15px;
+            color: #D17300;
         }
 
         /* Title Styling */
@@ -113,29 +103,35 @@
             color: black;
         }
 
-        @media (max-width: 500px) {
-            .names {
-                flex-direction: column; /* Stack the developer containers vertically */
-                align-items: center; /* Center the items horizontally */
-                gap: 20px; /* Adjust the gap between the developer containers for mobile */
-            }
-
-            .developer-container {
-                width: 100%; /* Make each developer container take up the full width */
-                margin-bottom: 20px; /* Space between developer containers */
-                text-align: center; /* Center the content inside each container */
-            }
-
-            .page-title {
-                font-size: 40px; /* Adjust the title size for smaller screens */
-            }
-
-            .back-button {
-                top: 10px; /* Adjust the top positioning */
-                left: 10px; /* Adjust the left positioning */
-                font-size: 20px; /* Adjust the button size */
-            }
+        .name-text {
+            font-weight: bold;
+            font-size: 30px;
+            color: #D17300;
         }
+
+        /* Dark Mode Styles */
+
+        .dark-mode .back-button {
+            background-color: #ff8c00; /* Spotify green */
+            color: black;
+        }
+
+        .dark-mode .back-button:hover {
+            background-color: #1DB954; /* Darker green on hover */
+        }
+
+        .dark-mode .page-title {
+            color: black;
+        }
+
+        .dark-mode .name-text {
+            color: black;
+        }
+
+        .dark-mode .email {
+            color: black;
+        }
+
     </style>
 </head>
 <body>
@@ -159,8 +155,8 @@
                 <img src="{% static developer.image %}" alt="{{ developer.name }}">
             </div>
             <div class="name-container">
-                <p style="font-weight: bold; font-size: 30px; color: #D17300;">{{ developer.name }}</p>
-                <p class="email" style="font-style: italic; font-size: 15px; color: #D17300;">{{ developer.email }}</p>
+                <p class="name-text">{{ developer.name }}</p>
+                <p class="email">{{ developer.email }}</p>
             </div>
         </div>
         {% endfor %}
@@ -168,7 +164,7 @@
 
     <div class="justify-items-center p-8">
         <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-200 p-4 border-4 text-center max-w-4xl" style="display: block; text-decoration: none;">
-            <span class="body-text" style="font-family: var(--r-main-font);; font-size: 20px; font-style: italic; color: #D17300">
+            <span class="body-text" style="font-family: var(--r-main-font); font-size: 20px; font-style: italic; color: #D17300">
                 Spotify Roasted is a project designed to make a customized "Spotify Wrap" that analyzes your Spotify activity
                 and pokes a little fun at your music tastes. You can generate new wraps whenever you want and they are all
                 stored if you want to go back to previous wraps. If you want to share your warps we have links to share to
@@ -176,5 +172,7 @@
             </span>
         </article>
     </div>
+
+<script src="{% static 'js/darkMode.js' %}"></script>
 </body>
 </html>

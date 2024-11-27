@@ -33,6 +33,10 @@
             background-size: 100%;
             background-color: #0a0a0a;
         }
+        .dark-mode {
+            background: linear-gradient(to bottom, #ff8c00 60%, #000000 100%) !important;
+            color: black !important;
+        }
 
         .bg-spotify-green {
             background-color: #1DB954;
@@ -238,6 +242,7 @@ fetch(`/deleteWrap?accessToken=${localStorage.spotifyAccessToken}&wrapId=${index
     });
 
     </script>
+    <script src="{% static 'js/darkMode.js' %}"></script>
 
 </head>
 <a href="{% url 'home' %}">
