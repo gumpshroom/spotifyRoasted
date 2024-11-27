@@ -75,12 +75,14 @@
             font-size: 28px; /* Large title font size */
             margin-bottom: 8px; /* Space below the title */
             font-weight: bold;
+            color: white;
         }
 
         .wrap-meta {
             font-size: 20px; /* Smaller text for metadata */
             color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
             font-style: italic;
+            color: white;
         }
 
         .create-wrap-container {
@@ -115,7 +117,7 @@
             margin-top: 75px;
         }
 
-        .button {
+        .back-button {
             position: absolute; /* This will position the button relative to the nearest positioned ancestor (in this case, the body) */
             top: 20px; /* Distance from the top of the screen */
             left: 20px; /* Distance from the left of the screen */
@@ -130,11 +132,55 @@
             font-size: 28px;
         }
 
-        .button:hover {
+        .back-button:hover {
             transform: scale(1.05); /* Slightly enlarge on hover */
             background-color: #1AA84B; /* Darker green on hover */
             cursor: pointer; /* Change cursor on hover */
             color: black;
+        }
+
+        /* Dark Mode Styles */
+
+        .dark-mode .back-button {
+            background-color: #ff8c00;
+            color: black;
+        }
+
+        .dark-mode .back-button:hover {
+            background-color: #1DB954;
+        }
+
+        .dark-mode .wrap-box {
+            background-color: black; /* Spotify green */
+            color: #1DB954;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .dark-mode .wrap-box:hover {
+            background-color: #222222; /* Darker green on hover */
+        }
+
+        .dark-mode .wrap-title {
+            color: #1DB954;
+        }
+
+        .dark-mode .wrap-meta {
+            color: #1DB954;
+            font-style: italic;
+        }
+
+        .dark-mode .create-wrap-button {
+            background-color: black; /* Spotify green */
+            color: #1DB954;
+        }
+
+        .dark-mode .create-wrap-button:hover {
+            background-color: #222222; /* Darker green on hover */
+        }
+
+        .dark-mode .welcome {
+            color: #1DB954;
+            -webkit-text-stroke: 1px black;
         }
     </style>
 
@@ -180,7 +226,7 @@
             wraps.forEach((wrapName, index) => {
                 // Create the wrap box container
                 const wrapBox = document.createElement("div");
-                wrapBox.className = "wrap-box flex justify-between items-center bg-spotify-green hover:bg-spotify-green-dark py-2 px-4 rounded-2xl text-white mb-4";
+                wrapBox.className = "wrap-box flex justify-between items-center bg-spotify-green hover:bg-spotify-green-dark py-2 px-4 rounded-2xl mb-4";
 
                 // Wrap link
                 const wrapLink = document.createElement("a");
@@ -246,12 +292,12 @@ fetch(`/deleteWrap?accessToken=${localStorage.spotifyAccessToken}&wrapId=${index
 
 </head>
 <a href="{% url 'home' %}">
-    <article class="button">
+    <article class="back-button">
         <span>< Home</span>
     </article>
 </a>
 
-<div id="welcome-message" class="welcome text-center circular-black" style="color: #1ED860"></div>
+<div id="welcome-message" class="welcome text-center circular-black"></div>
 
 <div class="create-wrap-container">
     <a href="/generateWrap?accessToken={{ accessToken|default:"" }}" class="create-wrap-button">Create Wrap</a>
