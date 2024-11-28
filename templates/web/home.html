@@ -33,9 +33,41 @@
             background: linear-gradient(to bottom, #ff8c00 60%, #000000 100%) !important;
             color: black !important;
         }
-
+        .circular-black {
+            font-family: 'Circular Spotify Text Black', sans-serif;
+            font-size: 7.5rem;
+        }
         .johnny-torch {
             font-family: 'Rubik Beastly', sans-serif;
+            font-size: 7.5rem;
+        }
+        @media (max-width: 600px) {
+            .circular-black {
+                font-size: 50%;
+            }
+            .johnny-torch {
+                font-size: 50%;
+            }
+            body .dev-button {
+                width: 80px;
+                height: 80px;
+                font-size: 100%;
+                border-radius: 50%;
+                padding: 0;
+                right: 50px;
+                top: 720px;
+                position: fixed;
+            }
+            body .dark-button {
+                width: 80px;
+                height: 80px;
+                font-size: 100%;
+                border-radius: 50%;
+                padding: 0;
+                position: fixed;
+                top: 720px;
+                left: 50px;
+            }
         }
 
         .bg-spotify-green {
@@ -49,6 +81,7 @@
             transform: translateX(-50%);
             text-align: center;
         }
+
 
         .names {
             display: flex;
@@ -238,15 +271,15 @@
     <!-- Contact Devs Button -->
     <a href="/contact">
         <article class="dev-button">
-            <span>Contact the Developers</span>
+            <span>Contact Us</span>
         </article>
     </a>
 
     <main class="flex flex-col items-center justify-center h-screen space-y-12">
         <!-- Title -->
         <div class="header website-name text-center flex justify-center items-center space-x-4">
-            <h1 class="circular-black" style="color: #1ED860; font-size: 200px;">Spotify</h1>
-            <h1 class="johnny-torch" style="color: orangered; font-size: 200px;">Roasted</h1>
+            <h1 class="circular-black" style="color: #1ED860;">Spotify</h1>
+            <h1 class="johnny-torch" style="color: orangered;">Roasted</h1>
         </div>
 
         <!-- Sign-in Button -->
