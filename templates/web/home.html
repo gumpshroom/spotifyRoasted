@@ -33,6 +33,9 @@
             background: linear-gradient(to bottom, #ff8c00 60%, #000000 100%) !important;
             color: black !important;
         }
+        .title {
+            flex-direction: row;
+        }
         .circular-black {
             font-family: 'Circular Spotify Text Black', sans-serif;
             font-size: 7.5rem;
@@ -42,11 +45,16 @@
             font-size: 7.5rem;
         }
         @media (max-width: 600px) {
+            .title {
+                flex-direction: column;
+            }
             .circular-black {
-                font-size: 50%;
+                font-size: 70%;
+                flex-direction: column;
             }
             .johnny-torch {
-                font-size: 50%;
+                font-size: 70%;
+                flex-direction: column;
             }
             body .dev-button {
                 width: 80px;
@@ -67,6 +75,12 @@
                 position: fixed;
                 top: 720px;
                 left: 50px;
+            }
+            body .signin {
+                position: relative;
+                margin-top: 20px;
+                top: -120px;
+                padding: 10px;
             }
         }
 
@@ -278,8 +292,10 @@
     <main class="flex flex-col items-center justify-center h-screen space-y-12">
         <!-- Title -->
         <div class="header website-name text-center flex justify-center items-center space-x-4">
-            <h1 class="circular-black" style="color: #1ED860;">Spotify</h1>
-            <h1 class="johnny-torch" style="color: orangered;">Roasted</h1>
+            <div class ="title">
+                <h1 class="circular-black" style="color: #1ED860;">Spotify</h1>
+                <h1 class="johnny-torch" style="color: orangered;">Roasted</h1>
+            </div>
         </div>
 
         <!-- Sign-in Button -->
