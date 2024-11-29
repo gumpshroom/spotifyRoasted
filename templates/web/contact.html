@@ -13,6 +13,18 @@
     <link href="{% static 'dist/theme/dracula.css' %}" rel="stylesheet">
 
     <style>
+        @media (max-width: 600px) {
+            .back-button {
+                width: 100px !important;
+                height: 50px !important;
+                padding: 5px 10px !important;
+                font-size: 14px !important;
+                border-radius: 20px !important;
+            }
+            .page-title {
+                font-size: 200px;
+            }
+        }
         body {
             background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%, #ff8c00);
             color: white;
@@ -131,14 +143,13 @@
         .dark-mode .email {
             color: black;
         }
-
     </style>
 </head>
 <body>
     <!-- Back Button -->
     <a href="{% url 'home' %}">
         <article class="back-button">
-            <span>< Home</span>
+            <span>&lt; Home</span>
         </article>
     </a>
 
