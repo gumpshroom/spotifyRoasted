@@ -11,5 +11,5 @@ urlpatterns = [
     path("getWrap", views.getWrap, name="getWrap"),
     path("contact", views.contact, name="contact"),
     path('deleteWrap', views.deleteWrap, name='deleteWrap'),
-
+path('shorten-url/', views.shorten_url, name='shorten_url'),
 ]

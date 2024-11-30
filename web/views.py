@@ -1,3 +1,4 @@
+import pyshorteners
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from groq import Groq
@@ -248,3 +249,12 @@ def deleteWrap(request):
 
 def your_view(request):
     return render(request, 'web/wrap.html', {})
+
+def shorten_url(request):
+    url = request.GET.get('url')
+    if url:
+        s = pyshorteners.Shortener()
+        short_url = s.tinyurl.short(url)
+        return JsonResponse({'short_url': short_url})
+    else:
+        return JsonResponse({'error': 'URL parameter is missing'}, status=400)

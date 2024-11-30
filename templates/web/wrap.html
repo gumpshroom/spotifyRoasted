@@ -72,11 +72,15 @@
 
 
 <div id="shareButtons" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000; text-align: center; margin-bottom: 20px;">
-<!-- Facebook Share Button -->
+        <!-- New Copy URL button -->
+<button onclick="copyAndShortenURL()" class="button is-success" style="background-color: #28a745; color: white; padding: 2px 5px; border-radius: 4px; text-decoration: none;">
+    Copy and Shorten URL
+</button>
+    <!-- Facebook Share Button -->
 <a id="facebook-share"
    target="_blank"
    class="button is-primary"
-   style="background-color: #3b5998; color: white; padding: 3px 7px; border-radius: 5px; text-decoration: none;">
+   style="background-color: #3b5998; color: white; padding: 2px 5px; border-radius: 4px; text-decoration: none;">
     Share on Facebook
 </a>
 
@@ -84,9 +88,41 @@
 <a id="linkedin-share"
    target="_blank"
    class="button is-info"
-   style="background-color: #0077b5; color: white; padding: 3px 7px; border-radius: 5px; text-decoration: none;">
+   style="background-color: #0077b5; color: white; padding: 2px 5px; border-radius: 4px; text-decoration: none;">
     Share on LinkedIn
 </a>
+
+
+<script>
+    function copyAndShortenURL() {
+        // Get the current page URL
+        const currentURL = window.location.href;
+
+        // Make a request to the Django backend to shorten the URL
+        fetch(`/shorten-url?url=${encodeURIComponent(currentURL)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.short_url) {
+                    // Copy the shortened URL to the clipboard
+                    const textarea = document.createElement('textarea');
+                    textarea.value = data.short_url;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+
+                    // Notify the user
+                    alert('Shortened URL copied to clipboard: ' + data.short_url);
+                } else {
+                    alert('Failed to shorten the URL.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while shortening the URL.');
+            });
+    }
+</script>
 
 <script>
     // Get the current page URL
