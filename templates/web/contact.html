@@ -15,45 +15,6 @@
     <link href="{% static 'dist/theme/dracula.css' %}" rel="stylesheet">
 
     <style>
-        @media (max-width: 600px) {
-            .back-button {
-                padding: 200%;
-            }
-            .info-container {
-                flex-direction: column;
-                gap: 20px;
-                justify-items: center;
-                width: 100%;
-            }
-            .developer-container {
-                margin: 0;
-                padding: 10px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                text-align: center;
-                width: 100%;
-                max-height: 0;
-            }
-            .image-container {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-top: -90px;
-                width: 100%;
-                max-width: 150px;
-                height: auto;
-            }
-            .image-container img {
-                width: 100%;
-                max-width: 150px;
-                height: auto;
-                object-fit: cover;
-            }
-            .name-text .email {
-                height: 20px;
-            }
-        }
         body {
             background: linear-gradient(to bottom, #000000 60%, #ff8c00 100%, #ff8c00);
             color: white;
@@ -88,10 +49,30 @@
             margin-top: 120px;
             gap: 100px; /* Adjust the gap between the developer containers */
         }
+        @media (max-width: 600px) {
+            .info-container {
+                flex-direction: column;
+                gap: 30px;
+                justify-items: center;
+                width: 100%;
+            }
+        }
         .image-container {
             display: flex; /* Turn the container into a flexbox */
             justify-content: center; /* Center horizontally */
             width: 100%; /* Ensure the container takes up full width */
+        }
+        @media (max-width: 600px) {
+            .image-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                /*margin-top: -90px;*/
+                width: 50%;
+                max-width: 50px;
+                height: 100%;
+                max-height: 50px;
+            }
         }
         .image-container img {
             width: 150px;
@@ -99,8 +80,22 @@
             border-radius: 50%;
             object-fit: cover;
         }
+        @media (max-width: 600px) {
+            .image-container img {
+                width: 150px;
+                /*max-width: 10px;*/
+                height: 50px;
+                /*max-height: 10px;*/
+                object-fit: cover;
+            }
+        }
         .name-container {
             text-align: center;
+        }
+        @media (max-width: 600px) {
+            .name-container {
+                padding-left: 0px;
+            }
         }
         .email {
             margin-top: 5px;
@@ -108,7 +103,11 @@
             font-size: 15px;
             color: #D17300;
         }
-
+        @media (max-width: 600px) {
+            .email {
+                padding-left: 20px;
+            }
+        }
         /* Title Styling */
         .page-title {
             font-size: 60px;
@@ -116,10 +115,30 @@
             text-align: center;
             font-family: 'Bebas Neue', sans-serif;
         }
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 30px;
+                padding-top: 10px;
+                margin-top: 20px;
+            }
+        }
 
         /* Developer container styling */
         .developer-container {
             margin-bottom: 10px;
+        }
+        @media (max-width: 600px) {
+            .developer-container {
+                margin: 0;
+                padding: 10px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                text-align: center;
+                width: 100%;
+                max-height: 0;
+                padding-left: 20px;
+            }
         }
 
         .back-button {
@@ -136,6 +155,12 @@
             font-family: 'Bebas Neue', sans-serif;
             font-size: 28px;
         }
+        @media (max-width: 600px) {
+            .back-button {
+                padding: 2px 4px;
+                margin-top: 50px;
+            }
+        }
 
         .back-button:hover {
             transform: scale(1.05); /* Slightly enlarge on hover */
@@ -148,6 +173,24 @@
             font-weight: bold;
             font-size: 30px;
             color: #D17300;
+        }
+        @media (max-width: 600px) {
+            .name-text {
+                font-weight: bold;
+                font-size: 15px;
+                color: #D17300;
+            }
+        }
+
+        .body-text-main {
+            font-size: 20px;
+            font-style: italic;
+            color: #D17300
+        }
+        @media (max-width: 600px) {
+            .body-text-main {
+                font-size: 15px;
+            }
         }
 
         /* Dark Mode Styles */
@@ -204,7 +247,7 @@
 
     <div class="justify-items-center p-8">
         <article class="rounded-3xl border-black bg-black flex-nowrap box-border h-50 w-200 p-4 border-4 text-center max-w-4xl" style="display: block; text-decoration: none;">
-            <span class="body-text" style="font-family: var(--r-main-font); font-size: 20px; font-style: italic; color: #D17300">
+            <span class="body-text-main">
                 Spotify Roasted is a project designed to make a customized "Spotify Wrap" that analyzes your Spotify activity
                 and pokes fun at your music taste. You can generate new wraps whenever you want, and they are all
                 stored if you want to go back to previous wraps. If you want to share your wraps we have links to share to
