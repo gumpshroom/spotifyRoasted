@@ -12,9 +12,19 @@
             integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content="Spotify Roasted: Your Personalized Wrap!" />
+    <meta property="og:description" content="Check out my Spotify Wrapped roast and share yours too!" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:image" content="http://129.213.47.14:8000" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Spotify Roasted" />
+
+
     <link rel="stylesheet" href="{% static 'dist/reset.css' %}">
     <link rel="stylesheet" href="{% static 'dist/reveal.css' %}">
     <link rel="stylesheet" href="{% static 'dist/theme/dracula.css' %}">
+
     <style>
         .left {
             text-align: left;
@@ -46,17 +56,58 @@
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
         }
 
+        .button:hover {
+            opacity: 0.9; /* Adjusts opacity on hover */
+        }
+
+
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
 </head>
 <body>
+
+
+
+<div id="shareButtons" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000; text-align: center; margin-bottom: 20px;">
+<!-- Facebook Share Button -->
+<a id="facebook-share"
+   target="_blank"
+   class="button is-primary"
+   style="background-color: #3b5998; color: white; padding: 3px 7px; border-radius: 5px; text-decoration: none;">
+    Share on Facebook
+</a>
+
+<!-- LinkedIn Share Button -->
+<a id="linkedin-share"
+   target="_blank"
+   class="button is-info"
+   style="background-color: #0077b5; color: white; padding: 3px 7px; border-radius: 5px; text-decoration: none;">
+    Share on LinkedIn
+</a>
+
+<script>
+    // Get the current page URL
+    var currentURL = window.location.href;
+
+    // Set the href attribute for Facebook and LinkedIn share buttons
+    document.getElementById('facebook-share').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(currentURL);
+    document.getElementById('linkedin-share').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(currentURL);
+</script>
+</div>
+
+
+
 <div class="reveal">
     <div class="slides" id="slidesContainer">
 
     </div>
 </div>
+
+
+
 <script src="{% static '/dist/reveal.js' %}"></script>
 
 <script>
