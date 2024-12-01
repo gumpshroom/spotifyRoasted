@@ -124,7 +124,7 @@ def generateWrap(request):
                     {
                         "role": "user",
                         "content": "Make a creative 2-3 sentence roast parody of a Spotify Wrapped about the user liking the song " + topSong + ", a " +
-                                   topGenre + " track. Use dry humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Don't start with 'here's a parody...'. Roast me, the user."
+                                   topGenre + " track. Make sure to mention the top song, and use dry humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Don't start with 'here's a parody...'. Roast me, the user."
                     }
                 ],
                 model="llama3-8b-8192",
@@ -135,7 +135,7 @@ def generateWrap(request):
                     {
                         "role": "user",
                         "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped about me liking the artist " + topArtist + ", a " +
-                                   topGenre + " music artist. Use creative, witty humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
+                                   topGenre + " music artist. Make sure to mention the top artist, and use creative, witty humanlike humor. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
                     }
                 ],
                 model="llama3-8b-8192",
@@ -145,7 +145,7 @@ def generateWrap(request):
                 messages=[
                     {
                         "role": "user",
-                        "content": "Make a witty 2-3 sentence roast parody of a Spotify Wrapped about me liking " + topGenre + " music. Use dry, creative but not overly sarcastic humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
+                        "content": "Make a witty 2-3 sentence roast parody of a Spotify Wrapped about me liking " + topGenre + " music. Make sure to mention the top genre, and use dry, creative but not overly sarcastic humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
                     }
                 ],
                 model="llama3-8b-8192",
