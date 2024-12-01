@@ -191,32 +191,151 @@
     var summaryRoastSentences = splitToSentences(summaryRoast);
     console.log(topSongRoast)
     console.log(topSongRoastSentences)
-    //generate slides
-    var container = document.getElementById("slidesContainer");
 
+// Generate slides
+var container = document.getElementById("slidesContainer");
 
-    for (var j = 0; j < varNames.length; j++) {
-        var sentences = eval(varNames[j].replaceAll(' ', '') + "Sentences");
-        var section = document.createElement("section");
-        section.classList.add('slide')
-        section.classList.add('large-padding')
-        var color = randomColor();
-        section.setAttribute('tint', color)
-        if (j === 0) {
-            section.innerHTML = "<h3 class='center right-margin fragment left fade-in left-align'>Welcome to Spotify Roasted.</h3>";
-        } else {
-            section.innerHTML = "<h3 class='center right-margin left fade-in-then-semi-out left-align'>your " + varNames[j].replace(' Roast', '') + "</h3>";
-        }
-        //section.setAttribute('data-background-gradient', 'linear-gradient(to right, ' + color + ', rgba(0,0,0,0.2))') //'rgba(0,0,0,0.5)), url("{{ wrap.topSongImage }}")');
+// Create the "Welcome to Spotify Roasted" slide
+var welcomeSlide = document.createElement("section");
+welcomeSlide.classList.add('slide');
+welcomeSlide.classList.add('large-padding');
+welcomeSlide.setAttribute('data-transition', 'fade');
+welcomeSlide.setAttribute('tint', randomColor()); // Set tint for the background color
+// Add content with flexbox styling for centering
+welcomeSlide.innerHTML = `
+    <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%;">
+        <h3 class="fade-in" style="font-size: 5rem; text-align: center;">Welcome to Spotify Roasted.</h3>
+    </div>
+`;
+container.appendChild(welcomeSlide);
 
-        section.setAttribute('data-transition', 'fade')
+// Create the top song description slide
+var topSongDescriptionSlide = document.createElement("section");
+topSongDescriptionSlide.classList.add('slide');
+topSongDescriptionSlide.classList.add('large-padding');
+topSongDescriptionSlide.setAttribute('data-transition', 'fade');
+topSongDescriptionSlide.setAttribute('tint', randomColor()); // Set tint for the background color
 
-        section.innerHTML += "<div class='center large-margin right-margin fragment mid left fade-in-then-semi-out left-align'><p>" + sentences[0] + "</p><hr style='visibility: hidden'></div>";
-        for (var i = 1; i < sentences.length; i++) {
-            section.innerHTML += "<p data-id='p" + i + "' class='center large-margin right-margin fragment left small fade-in-then-semi-out left-align'>" + sentences[i] + "</p>";
-        }
-        container.appendChild(section);
+if (topSongRoastSentences.length > 0) {
+    // Add the first sentence as a fragment
+    topSongDescriptionSlide.innerHTML = `
+        <h3 class='center right-margin fade-in left-align'>Your Top Song</h3>
+        <div class='center large-margin right-margin fragment mid left fade-in-then-semi-out left-align'>
+            <p>${topSongRoastSentences[0]}</p>
+            <hr style='visibility: hidden'>
+        </div>
+    `;
+
+    // Add the second sentence as a separate fragment
+    if (topSongRoastSentences.length > 1) {
+        topSongDescriptionSlide.innerHTML += `
+            <div class='center large-margin right-margin fragment mid left fade-in-then-semi-out left-align'>
+                <p>${topSongRoastSentences[1]}</p>
+            </div>
+        `;
     }
+
+    container.appendChild(topSongDescriptionSlide);
+}
+
+// Create the top song image slide
+if ("{{ wrap.topSongImage }}") {
+    var imageSection = document.createElement("section");
+    imageSection.classList.add('slide');
+    imageSection.classList.add('large-padding');
+    imageSection.setAttribute('data-transition', 'fade');
+    imageSection.setAttribute('tint', randomColor()); // Set a random background color
+
+    imageSection.innerHTML = `
+        <h3 class='center right-margin fade-in left-align'>Your Top Song Image</h3>
+        <div class="image-container" style="display: flex; justify-content: center; align-items: center; padding: 10px 0 40px 0; overflow: hidden;">
+            <img id="topSongImage" class="fade-in-image" src="{{ wrap.topSongImage }}" alt="Top Song"
+                 style="width: 100%; height: auto; max-height: 70vh; object-fit: contain; border-radius: 10px; box-shadow: none; opacity: 0;">
+        </div>
+    `;
+
+    // Append the image slide to the container
+    container.appendChild(imageSection);
+}
+
+// Use IntersectionObserver to trigger the fade-in effect when the image slide comes into view
+document.addEventListener('DOMContentLoaded', function() {
+    const image = document.getElementById('topSongImage');
+
+    if (image) {
+        const observer = new IntersectionObserver((entries, observerInstance) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transition = 'opacity 1.5s'; // Make the fade-in slower
+                    entry.target.style.opacity = 1; // Trigger the fade-in effect
+                } else {
+                    entry.target.style.opacity = 0; // Reset opacity when it goes out of view
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the image is visible
+
+        observer.observe(image);
+    }
+});
+
+
+
+
+
+// Create slides for other sections (top genre, top artist, summary, etc.)
+for (var j = 1; j < varNames.length; j++) {
+    var sentences = eval(varNames[j].replaceAll(' ', '') + "Sentences");
+    var section = document.createElement("section");
+    section.classList.add('slide');
+    section.classList.add('large-padding');
+    var color = randomColor();
+    section.setAttribute('tint', color);
+
+    section.innerHTML = "<h3 class='center right-margin left fade-in-then-semi-out left-align'>Your " + varNames[j].replace(' Roast', '') + "</h3>";
+    section.setAttribute('data-transition', 'fade');
+    section.innerHTML += "<div class='center large-margin right-margin fragment mid left fade-in-then-semi-out left-align'><p>" + sentences[0] + "</p><hr style='visibility: hidden'></div>";
+
+    for (var i = 1; i < sentences.length; i++) {
+        section.innerHTML += "<p data-id='p" + i + "' class='center large-margin right-margin fragment left small fade-in-then-semi-out left-align'>" + sentences[i] + "</p>";
+    }
+
+    container.appendChild(section);
+}
+
+
+// Create the share slide and append it to the container
+var shareSlide = document.createElement("section");
+shareSlide.classList.add('slide');
+shareSlide.classList.add('large-padding');
+shareSlide.setAttribute('data-transition', 'fade');
+shareSlide.setAttribute('tint', randomColor()); // Set a random background color
+
+shareSlide.innerHTML = `
+    <h3 class='center right-margin left fade-in-then-semi-out left-align'>Share Your Spotify Roasted</h3>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 15px; margin-top: 20px;">
+        <!-- Copy URL button -->
+        <button onclick="copyAndShortenURL()" class="button is-success" style="background-color: #28a745; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none;">
+            Copy and Shorten URL
+        </button>
+        <!-- Facebook Share Button -->
+        <a id="facebook-share"
+           target="_blank"
+           class="button is-primary"
+           style="background-color: #3b5998; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none;">
+            Share on Facebook
+        </a>
+        <!-- LinkedIn Share Button -->
+        <a id="linkedin-share"
+           target="_blank"
+           class="button is-info"
+           style="background-color: #0077b5; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none;">
+            Share on LinkedIn
+        </a>
+    </div>
+`;
+
+container.appendChild(shareSlide);
+
 
 
 </script>
