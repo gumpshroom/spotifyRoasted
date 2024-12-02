@@ -222,7 +222,8 @@
             wrapsContainer.innerHTML = "No wraps found. Create a wrap to get started!";
         } else {
             const wraps = JSON.parse(data).wrapNames;
-
+            const wrapIds = JSON.parse(data).wrapIds;
+            const uid = JSON.parse(data).uid;
             wraps.forEach((wrapName, index) => {
                 // Create the wrap box container
                 const wrapBox = document.createElement("div");
@@ -251,10 +252,29 @@
                 } else {
                     console.log(`Invalid wrap name format for wrap #${index + 1}`);
                 }
+                const copyLinkButton = document.createElement("button");
+            copyLinkButton.className = "bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded small-padding";
+            copyLinkButton.innerText = "Copy Link";
+            copyLinkButton.onclick = function() {
+                const permalink = location.origin + '/permalink?id=' + wrapIds[index] + '&uid=' + uid;
+                navigator.clipboard.writeText(permalink);
+                alert("Link copied to clipboard!");
+            };
+                const shareDialog = document.createElement("button");
+                shareDialog.className = "bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded small-padding";
+                shareDialog.innerText = "Share";
+        shareDialog.onclick = function(e) {
+            e.preventDefault();
+            navigator.share({
+                title: 'Spotify Roasted',
+                text: 'Check out my Spotify Roasted wrap!',
+                url: location.origin + '/permalink?id=' + wrapIds[index] + '&uid=' + uid
+            });
 
+        }
                 // Delete button
                 const deleteButton = document.createElement("button");
-                deleteButton.className = "bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded";
+                deleteButton.className = "bg-red-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded small-padding";
                 deleteButton.innerText = "Delete";
                 deleteButton.onclick = () => {
                     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -282,10 +302,13 @@ fetch(`/deleteWrap?accessToken=${localStorage.spotifyAccessToken}&wrapId=${index
                 // Append link and button to wrap box
                 wrapBox.appendChild(wrapLink);
                 wrapBox.appendChild(deleteButton);
+                wrapBox.appendChild(copyLinkButton);
+                wrapBox.appendChild(shareDialog);
                 wrapsContainer.appendChild(wrapBox);
             });
         }
     });
+
 
     </script>
     <script src="{% static 'js/darkMode.js' %}"></script>

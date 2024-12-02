@@ -1,4 +1,4 @@
-import pyshorteners
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from groq import Groq
@@ -9,6 +9,7 @@ import os
 import json
 import requests
 import base64
+import hashlib
 from django.http import JsonResponse
 
 
@@ -91,6 +92,7 @@ def generateWrap(request):
         # get user
         try:
             user = User.objects.get(access_token=request.GET.get('accessToken'))
+            id = user.spotify_id + len(user.wraps).__str__()
             wrap = {
                 'name': "Wrap from " + formatted_date,
                 'topSongRoast': "",
@@ -98,6 +100,8 @@ def generateWrap(request):
                 'topArtistRoast': "",
                 'summaryRoast': "",
                 'topSongImage': "",
+                'id': hashlib.md5(id.encode()).hexdigest(),
+                'uid': user.spotify_id
             }
             url = 'https://api.spotify.com/v1/me/top/tracks'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + user.access_token})
@@ -181,7 +185,11 @@ def getWraps(request):
                 str = '{ "wrapNames": ['
                 for i in range(len(user.wraps)):
                     str += '"' + user.wraps[i.__str__()]['name'] + '", '
-                str = str[:-2] + "] }"
+                str = str[:-2] + "], \"wrapIds\": ["
+                for i in range(len(user.wraps)):
+                    str += '"' + user.wraps[i.__str__()]['id'] + '", '
+                str = str[:-2] + "] , \"uid\": \"" + user.spotify_id + "\"}"
+
                 return HttpResponse(json.dumps(str))
             else:
                 return HttpResponse('{ "error": "you have no wraps" }')
@@ -189,7 +197,20 @@ def getWraps(request):
             return HttpResponse("user not found")
     else:
         return redirect('/')
-
+def permalink(request):
+    if request.method == 'GET' and request.GET.get('id') and request.GET.get('uid'):
+        try:
+            user = User.objects.get(spotify_id=request.GET.get('uid'))
+            if user.wraps is not None:
+                for i in range(len(user.wraps)):
+                    if user.wraps[i.__str__()]['id'] == request.GET.get('id'):
+                        wrap = user.wraps[i.__str__()]
+                        return render(request, 'web/wrap.html', {'wrap': wrap})
+            else:
+                return HttpResponse('{ "error": "wrap not found" }')
+        except User.DoesNotExist:
+            return HttpResponse("wrap not found")
+    return HttpResponse("400 Bad Request")
 def getWrap(request):
     if request.method == 'GET' and request.GET.get('accessToken') and request.GET.get('wrapId'):
         try:
@@ -249,12 +270,3 @@ def deleteWrap(request):
 
 def your_view(request):
     return render(request, 'web/wrap.html', {})
-
-def shorten_url(request):
-    url = request.GET.get('url')
-    if url:
-        s = pyshorteners.Shortener()
-        short_url = s.tinyurl.short(url)
-        return JsonResponse({'short_url': short_url})
-    else:
-        return JsonResponse({'error': 'URL parameter is missing'}, status=400)

@@ -71,26 +71,7 @@
 
 
 
-<div id="shareButtons" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000; text-align: center; margin-bottom: 20px;">
-        <!-- New Copy URL button -->
-<button onclick="copyAndShortenURL()" class="button is-success" style="background-color: #28a745; color: white; padding: 2px 5px; border-radius: 4px; text-decoration: none;">
-    Copy and Shorten URL
-</button>
-    <!-- Facebook Share Button -->
-<a id="facebook-share"
-   target="_blank"
-   class="button is-primary"
-   style="background-color: #3b5998; color: white; padding: 2px 5px; border-radius: 4px; text-decoration: none;">
-    Share on Facebook
-</a>
 
-<!-- LinkedIn Share Button -->
-<a id="linkedin-share"
-   target="_blank"
-   class="button is-info"
-   style="background-color: #0077b5; color: white; padding: 2px 5px; border-radius: 4px; text-decoration: none;">
-    Share on LinkedIn
-</a>
 
 
 <script>
@@ -124,15 +105,7 @@
     }
 </script>
 
-<script>
-    // Get the current page URL
-    var currentURL = window.location.href;
 
-    // Set the href attribute for Facebook and LinkedIn share buttons
-    document.getElementById('facebook-share').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(currentURL);
-    document.getElementById('linkedin-share').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(currentURL);
-</script>
-</div>
 
 
 
@@ -305,37 +278,18 @@ for (var j = 1; j < varNames.length; j++) {
 
 
 // Create the share slide and append it to the container
-var shareSlide = document.createElement("section");
+/*var shareSlide = document.createElement("section");
 shareSlide.classList.add('slide');
 shareSlide.classList.add('large-padding');
 shareSlide.setAttribute('data-transition', 'fade');
 shareSlide.setAttribute('tint', randomColor()); // Set a random background color
 
 shareSlide.innerHTML = `
-    <h3 class='center right-margin left fade-in-then-semi-out left-align'>Share Your Spotify Roasted</h3>
-    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 15px; margin-top: 20px;">
-        <!-- Copy URL button -->
-        <button onclick="copyAndShortenURL()" class="button is-success" style="background-color: #28a745; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none;">
-            Copy and Shorten URL
-        </button>
-        <!-- Facebook Share Button -->
-        <a id="facebook-share"
-           target="_blank"
-           class="button is-primary"
-           style="background-color: #3b5998; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none;">
-            Share on Facebook
-        </a>
-        <!-- LinkedIn Share Button -->
-        <a id="linkedin-share"
-           target="_blank"
-           class="button is-info"
-           style="background-color: #0077b5; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none;">
-            Share on LinkedIn
-        </a>
-    </div>
+
+
 `;
 
-container.appendChild(shareSlide);
+container.appendChild(shareSlide);*/
 
 
 
@@ -381,22 +335,24 @@ container.appendChild(shareSlide);
         setTimeout(nextSlide, 800);
     });
     Reveal.on('slidechanged', function (event) {
-        var newcolor = event.currentSlide.getAttribute('tint');
-        var oldcolor = event.previousSlide.getAttribute('tint');
-        console.log(newcolor)
-        var viewportElement = Reveal.getViewportElement();
-        console.log(viewportElement)
-        anime({
-            targets: '.slide-background',
-            keyframes: [
-                {backgroundColor: oldcolor},
-                {backgroundColor: newcolor}
-            ],
-            autoplay: true,
-            duration: 300,
-            //direction: 'alternate',
-            easing: 'cubicBezier(0,.69,0,1)'
-        })
+        if (event.currentSlide && event.previousSlide) {
+            var newcolor = event.currentSlide.getAttribute('tint');
+            var oldcolor = event.previousSlide.getAttribute('tint');
+            console.log(newcolor)
+            var viewportElement = Reveal.getViewportElement();
+            console.log(viewportElement)
+            anime({
+                targets: '.slide-background',
+                keyframes: [
+                    {backgroundColor: oldcolor},
+                    {backgroundColor: newcolor}
+                ],
+                autoplay: true,
+                duration: 300,
+                //direction: 'alternate',
+                easing: 'cubicBezier(0,.69,0,1)'
+            })
+        }
     });
 
     Reveal.addKeyBinding({keyCode: 38, key: 'UP', description: 'Previous slide'}, prevSlide);
