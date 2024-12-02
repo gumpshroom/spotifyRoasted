@@ -106,7 +106,7 @@ def generateWrap(request):
             }
 
             topSong, topArtist, topGenre, topAlbum = None, None, None, None
-            url = 'https://api.spotify.com/v1/me/albums'
+            url = 'https://api.spotify.com/v1/me/top/tracks'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + user.access_token})
             if res.status_code == 200:
                 topAlbum = res.json()['items'][0]['album']['name']
@@ -167,7 +167,7 @@ def generateWrap(request):
                 messages=[
                     {
                         "role": "user",
-                        "content": "Make a passive-aggressive 2-3 sentence roast about me liking the albums " + topAlbum + " and other" + topGenre + "music.Use subtle, dry, sarcastic, humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
+                        "content": "Make a passive-aggressive 2-3 sentence roast about me liking the albums " + topAlbum + " and other" + topGenre + "music. Specify the album you are roasting. Use subtle, dry, sarcastic, humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
                     }
                 ],
                 model="llama3-8b-8192",
