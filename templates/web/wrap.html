@@ -59,6 +59,26 @@
         .button:hover {
             opacity: 0.9; /* Adjusts opacity on hover */
         }
+        .back-button {
+            position: absolute; /* This will position the button relative to the nearest positioned ancestor (in this case, the body) */
+            top: 20px; /* Distance from the top of the screen */
+            left: 20px; /* Distance from the left of the screen */
+            padding: 10px 20px; /* Button size */
+            background-color: black; /* Spotify green */
+            color: white;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            border-radius: 50px; /* Rounded edges */
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+        }
+        @media (max-width: 600px) {
+            .back-button {
+                padding: 2px 4px;
+                margin-top: 50px;
+            }
+        }
 
 
     </style>
@@ -69,46 +89,14 @@
 </head>
 <body>
 
-
-
-
-
-
-<script>
-    function copyAndShortenURL() {
-        // Get the current page URL
-        const currentURL = window.location.href;
-
-        // Make a request to the Django backend to shorten the URL
-        fetch(`/shorten-url?url=${encodeURIComponent(currentURL)}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.short_url) {
-                    // Copy the shortened URL to the clipboard
-                    const textarea = document.createElement('textarea');
-                    textarea.value = data.short_url;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textarea);
-
-                    // Notify the user
-                    alert('Shortened URL copied to clipboard: ' + data.short_url);
-                } else {
-                    alert('Failed to shorten the URL.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while shortening the URL.');
-            });
-    }
-</script>
-
-
-
-
-
+<div>
+        <!-- Back Button -->
+    <a href="{% url 'home' %}">
+        <article class="back-button">
+            <span>&lt; Home</span>
+        </article>
+    </a>
+</div>
 <div class="reveal">
     <div class="slides" id="slidesContainer">
 
@@ -155,12 +143,14 @@
     var topSongRoast = "{{ wrap.topSongRoast }}";
     var topGenreRoast = "{{ wrap.topGenreRoast }}";
     var topArtistRoast = "{{ wrap.topArtistRoast }}";
+    var topAlbum = "{{ wrap.topAlbumRoast}}";
     var summaryRoast = "{{ wrap.summaryRoast }}";
-    var varNames = ["top Song Roast", "top Genre Roast", "top Artist Roast", "summary Roast"];
+    var varNames = ["top Song Roast", "top Genre Roast", "top Artist Roast", "top Album Roast", "summary Roast"];
     //split to sentences
     var topSongRoastSentences = splitToSentences(topSongRoast);
     var topGenreRoastSentences = splitToSentences(topGenreRoast);
     var topArtistRoastSentences = splitToSentences(topArtistRoast);
+    var topAlbumRoastSentences = splitToSentences(topAlbum);
     var summaryRoastSentences = splitToSentences(summaryRoast);
     console.log(topSongRoast)
     console.log(topSongRoastSentences)
@@ -277,19 +267,7 @@ for (var j = 1; j < varNames.length; j++) {
 }
 
 
-// Create the share slide and append it to the container
-/*var shareSlide = document.createElement("section");
-shareSlide.classList.add('slide');
-shareSlide.classList.add('large-padding');
-shareSlide.setAttribute('data-transition', 'fade');
-shareSlide.setAttribute('tint', randomColor()); // Set a random background color
 
-shareSlide.innerHTML = `
-
-
-`;
-
-container.appendChild(shareSlide);*/
 
 
 

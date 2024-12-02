@@ -98,14 +98,22 @@ def generateWrap(request):
                 'topSongRoast': "",
                 'topGenreRoast': "",
                 'topArtistRoast': "",
+                'topAlbumRoast': "",
                 'summaryRoast': "",
                 'topSongImage': "",
                 'id': hashlib.md5(id.encode()).hexdigest(),
                 'uid': user.spotify_id
             }
+
+            topSong, topArtist, topGenre, topAlbum = None, None, None, None
             url = 'https://api.spotify.com/v1/me/top/tracks'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + user.access_token})
-            topSong, topArtist, topGenre = None, None, None
+            if res.status_code == 200:
+                topAlbum = res.json()['items'][0]['album']['name']
+            else:
+                return HttpResponse("spotify api failed 0")
+            url = 'https://api.spotify.com/v1/me/top/tracks'
+            res = requests.get(url, headers={'Authorization': 'Bearer ' + user.access_token})
             if res.status_code == 200:
                 topSong = res.json()['items'][0]['name']
                 wrap['topSongImage'] = res.json()['items'][0]['album']['images'][0]['url']
@@ -159,12 +167,23 @@ def generateWrap(request):
                 messages=[
                     {
                         "role": "user",
+                        "content": "Make a passive-aggressive 2-3 sentence roast about me liking the albums " + topAlbum + " and other" + topGenre + "music.Use subtle, dry, sarcastic, humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
+                    }
+                ],
+                model="llama3-8b-8192",
+            )
+            wrap['topAlbumRoast'] = chat_completion.choices[0].message.content
+            chat_completion = client.chat.completions.create(
+                messages=[
+                    {
+                        "role": "user",
                         "content": "Make a passive-aggressive 2-3 sentence roast parody of a Spotify Wrapped summary slide. I like " + topArtist + " and other " + topGenre + " music. Use subtle, dry, sarcastic, humanlike humor. Don't start with 'wow'. Do not use big ai-sounding words. Do not prefix with anything, only output the response. Do not use statistics. Don't start with 'here's a parody...'. Roast me, the user."
                     }
                 ],
                 model="llama3-8b-8192",
             )
             wrap['summaryRoast'] = chat_completion.choices[0].message.content
+
             wraps = user.wraps | {}
             wraps[len(wraps)] = wrap
             user.wraps = wraps
@@ -230,7 +249,7 @@ def contact(request):
     developers = [
         {"name": "Aaron Luu", "email": "aluu31@gatech.edu", "image": "images/AaronLuu.PNG"},
         {"name": "Patrick Del Rio", "email": "prio3@gatech.edu", "image": "images/PatrickDelRio.PNG"},
-        {"name": "Nathan Nguyen", "email": "nathannguyen0011@gmail.com", "image": "images/NathanNguyen.PNG"},
+        {"name": "Nathan Nguyen", "email": "nnguyen402@gatech.edu", "image": "images/NathanNguyen.PNG"},
         {"name": "Eric Yang", "email": "eyang317@gatech.edu", "image": "images/EricYang.PNG"},
         {"name": "Bao Nguyen", "email": "bnguyen324@gatech.edu", "image": "images/BaoNguyen.PNG"}
     ]
