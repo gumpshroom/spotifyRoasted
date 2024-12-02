@@ -106,7 +106,7 @@ def generateWrap(request):
             }
 
             topSong, topArtist, topGenre, topAlbum = None, None, None, None
-            url = 'https://api.spotify.com/v1/me/top/tracks'
+            url = 'https://api.spotify.com/v1/me/albums'
             res = requests.get(url, headers={'Authorization': 'Bearer ' + user.access_token})
             if res.status_code == 200:
                 topAlbum = res.json()['items'][0]['album']['name']
